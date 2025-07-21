@@ -24,8 +24,21 @@ function initCarousel() {
   })
 }
 
+function initCommentCarousel() {
+  nextTick(() => {
+    const el = document.querySelector('#carouselComment')
+    if (el) {
+      new bootstrap.Carousel(el, {
+        interval: 5000,
+        ride: 'carousel'
+      });
+    }
+  })
+}
+
 onMounted(() => {
   initCarousel()
+  initCommentCarousel()
 })
 
 // 監聽路由變化（每次進到首頁都初始化）
@@ -34,6 +47,8 @@ watch(
   (newPath) => {
     if (newPath === '/') {
         initCarousel()
+    } else if (newPath === '/about') {
+        initCommentCarousel()
     }
   }
 )

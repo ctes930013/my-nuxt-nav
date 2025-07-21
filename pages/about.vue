@@ -1,6 +1,54 @@
 <template>
-  <div>
-    <h1>關於我們</h1>
-    <p>這是關於我們的頁面。</p>
+  <div class="container my-5">
+    <h2 class="mb-4 text-center">客戶評論</h2>
+    <ClientOnly>
+      <div id="carouselComment" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+          <div
+            v-for="(review, index) in reviewsList.length / reviewsSplitCount"
+            :class="['carousel-item', { active: index === 0 }]"
+          >
+            <div class="row">
+              <div class="col-md-4" 
+                v-for="item in reviewsList.slice(index * reviewsSplitCount, index * reviewsSplitCount + reviewsSplitCount)" :key="index">
+                <div class="d-flex flex-column align-items-center p-4">
+                  <i class="bi bi-person" style="font-size: 6em;"></i>
+                  <p class="text-muted text-center mb-3" style="max-width: 200px;">"{{ item.comment }}"</p>
+                  <div class="mb-2">
+                    <span v-for="n in 5" :key="n">
+                      <i :class="n <= item.rating ? 'text-warning bi bi-star-fill mx-1' : 'text-secondary bi bi-star mx-1'"></i>
+                    </span>
+                  </div>
+                  <h6 class="fw-bold">{{ item.name }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" style="justify-content: flex-start;" type="button" data-bs-target="#carouselComment" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" style="background-color: brown;"></span>
+        </button>
+        <button class="carousel-control-next" style="justify-content: flex-end;" type="button" data-bs-target="#carouselComment" data-bs-slide="next">
+          <span class="carousel-control-next-icon" style="background-color: brown;"></span>
+        </button>
+      </div>
+    </ClientOnly>
   </div>
 </template>
+
+<script setup>
+//評論要切幾等分
+const reviewsSplitCount = ref(1)
+const { isMobile } = useIsMobile()
+watchEffect(() => {
+  reviewsSplitCount.value = isMobile.value ? 1 : 3
+});
+const reviewsList = [
+  { name: "陳先生", comment: "這間水果店超棒，水果新鮮又好吃！", rating: 5 },
+  { name: "林小姐", comment: "服務親切，送貨快速，推薦！", rating: 4 },
+  { name: "王大哥", comment: "價格合理，品質保證，下次還會再購買。", rating: 5 },
+  { name: "郭先生", comment: "水果很甜，美味可口！", rating: 5 },
+  { name: "鄭先生", comment: "服務佳，老闆娘很正！", rating: 5 },
+  { name: "許小姐", comment: "價格便宜又實惠。", rating: 4 }
+]
+</script>
