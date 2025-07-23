@@ -1,6 +1,18 @@
 <template>
   <div class="container my-5">
-    <h2 class="mb-4 text-center">客戶評論</h2>
+    <div class="row custom-margin-b-6 d-flex align-items-center">
+      <div class="col-md-6">
+        <img src="https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/07/23/realtime/32677631.jpg&s=Y&x=0&y=0&sw=5616&sh=3744&h=300&w=400" class="w-100" alt="桌機圖">
+      </div>
+      <div class="col-md-6 d-flex justify-content-center align-items-center mt-3 mt-md-0">
+        <div class="text-content d-flex flex-column">
+          <h2 class="mb-4 text-center">極高的品質</h2>
+          <p class="mb-2 text-center">我們致力於種植品質最高的水果</p>
+          <p class="mb-2 text-center">給予客戶最崇高的敬意</p>
+        </div>
+      </div>
+    </div>
+    <h2 class="mb-1 text-center">客戶評論</h2>
     <ClientOnly>
       <div id="carouselComment" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-inner">

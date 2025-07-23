@@ -7,3 +7,7 @@
 .main-bottom {
   margin-top: auto;
 }
+
+.custom-margin-b-6 {
+  margin-bottom: 8rem;
+}
