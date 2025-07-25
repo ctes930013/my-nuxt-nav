@@ -17,7 +17,7 @@
         <div class="carousel-inner">
           <div v-for="(banner, index) in bannerList" :class="index === 0 ? 'carousel-item active' : 'carousel-item'">
             <div class="img-container">
-              <img :src="banner.image" class="w-100" alt="桌機圖">
+              <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" cover />
             </div>
           </div>
         </div>
@@ -116,13 +116,12 @@ const bannerList = [
   padding-bottom: 75%; /* 4:3 比例 */
   overflow: hidden;
 }
-.img-container img {
+.img-container-fit {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 @media (min-width: 768px) {
   .img-container {
