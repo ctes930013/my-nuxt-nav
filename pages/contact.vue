@@ -1,33 +1,55 @@
 <template>
   <div>
-    <form class="container py-5" @submit.prevent="submitForm">
-      <h2 class="mb-4 text-center">聯絡我們</h2>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label for="name" class="form-label">姓名</label>
-          <input type="text" id="name" class="form-control" v-model="form.name" required />
-        </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" class="form-control" v-model="form.email" required />
-        </div>
-        <div class="col-md-6">
-          <label for="phone" class="form-label">市話</label>
-          <input type="tel" id="phone" class="form-control" v-model="form.telephone" />
-        </div>
-        <div class="col-md-6">
-          <label for="mobile" class="form-label">手機</label>
-          <input type="tel" id="mobile" class="form-control" v-model="form.mobile" />
-        </div>
-        <div class="col-12">
-          <label for="message" class="form-label">留言內容</label>
-          <textarea id="message" class="form-control" v-model="form.message" rows="4"></textarea>
-        </div>
-        <div class="col-12 text-center">
-          <button type="submit" class="btn btn-primary px-5 mt-3">送出</button>
-        </div>
-      </div>
-    </form>
+    <v-container class="py-8 px-md-15">
+      <v-form @submit.prevent="submitForm" ref="formRef" v-model="valid">
+        <h2 class="mb-4 text-center">聯絡我們</h2>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.name"
+              label="姓名"
+              required
+              :rules="[rules.required]"
+            />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.email"
+              label="Email"
+              type="email"
+              required
+              :rules="[rules.required, rules.email]"
+            />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.telephone"
+              label="市話"
+              type="tel"
+            />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.mobile"
+              label="手機"
+              type="tel"
+            />
+          </v-col>
+          <v-col cols="12">
+             <v-textarea
+              v-model="form.message"
+              label="留言內容"
+              rows="4"
+            />
+          </v-col>
+          <v-col cols="12" class="text-center">
+            <v-btn color="primary" type="submit" class="mt-3">
+              送出
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-container>
   </div>
 </template>
 
@@ -42,8 +64,20 @@ const form = ref({
   message: ''
 })
 
-const submitForm = () => {
-  console.log('送出表單資料：', form.value)
-  alert('表單已送出')
+const valid = ref(false)
+const formRef = ref(null)
+
+const rules = {
+  required: v => !!v || '此欄位為必填',
+  email: v =>
+    !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Email 格式錯誤'
+}
+
+const submitForm = async () => {
+  const validation = await formRef.value?.validate()
+  if (validation.valid) {
+    console.log('送出表單資料：', form.value)
+    alert('表單已送出')
+  }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="container my-5">
-    <div class="row custom-margin-b-6">
+    <div class="row custom-margin-b-8">
       <div class="col-md-6">
         <img src="https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/07/23/realtime/32677631.jpg&s=Y&x=0&y=0&sw=5616&sh=3744&h=300&w=400" class="w-100" alt="桌機圖">
       </div>
