@@ -11,3 +11,16 @@
 .custom-margin-b-8 {
   margin-bottom: 8rem;
 }
+
+.v-container-padding {
+  @media (min-width: 768px) {
+    padding-left: 18rem !important;
+    padding-right: 18rem !important;
+  }
+}
+
+.custom-mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
+}

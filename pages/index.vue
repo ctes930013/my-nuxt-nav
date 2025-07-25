@@ -29,19 +29,23 @@
         </button>
       </div>
     </ClientOnly>
-    <div class="container my-4">
-      <div class="row g-3">
-        <div class="col-6 col-sm-4 col-md-3" v-for="product in productList">
-          <div class="card carding">
+    <div class="container my-8">
+      <v-row class="g-3">
+        <v-col cols="6" sm="4" md="3" v-for="product in productList">
+          <v-card class="carding">
             <img :src="product.image" class="card-img-top" alt="商品圖片">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text subtitle">{{ product.description }}</p>
-              <button type="button" class="btn btn-primary d-block mx-auto d-md-inline-block">加入購物車</button>
-            </div>
-          </div>
-        </div>
-      </div>
+            <h5 class="fw-bold mb-1">{{ product.name }}</h5>
+            <p class="subtitle">{{ product.description }}</p>
+            <v-btn
+              color="primary"
+              block
+              class="custom-mx-auto align-left-md"
+            >
+              加入購物車
+            </v-btn>
+          </v-card>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -103,8 +107,9 @@ const bannerList = [
   line-height: 1.5em;
 }
 .carding {
-  border-radius: 3%;   /* 圓角 */
-  overflow: hidden;     /* 隱藏因為圓角裁切而多餘的布局 */
+  border-radius: 12px !important; /* 自訂圓角大小 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important; /* 自訂陰影 */
+  padding: 15px 20px;
 }
 .img-container {
   position: relative;
@@ -122,6 +127,14 @@ const bannerList = [
 @media (min-width: 768px) {
   .img-container {
     padding-bottom: 25%; /* 4:1 比例 */
+  }
+}
+@media (min-width: 960px) {
+  .align-left-md {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    display: inline-block !important;
+    min-width: auto !important;    /* 讓按鈕不要滿版 */
   }
 }
 </style>
