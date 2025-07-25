@@ -9,11 +9,19 @@
 }
 
 .custom-margin-b-8 {
-  margin-bottom: 8rem;
+  margin-bottom: 8rem !important;
 }
 
 .v-container-padding {
-  @media (min-width: 768px) {
+  @media (min-width: 600px) {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+  }
+  @media (min-width: 960px) {
+    padding-left: 8rem !important;
+    padding-right: 8rem !important;
+  }
+  @media (min-width: 1264px) {
     padding-left: 18rem !important;
     padding-right: 18rem !important;
   }
@@ -23,4 +31,12 @@
   margin-left: auto !important;
   margin-right: auto !important;
   display: block !important;
+}
+
+/* 確保與 Bootstrap 的樣式一致 */
+.custom-justify-center {
+  justify-content: center;
+}
+.custom-align-center {
+  align-items: center;
 }

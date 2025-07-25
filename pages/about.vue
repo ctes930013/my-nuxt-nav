@@ -1,50 +1,52 @@
 <template>
-  <div class="container my-5">
-    <div class="row custom-margin-b-8">
-      <div class="col-md-6">
-        <img src="https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/07/23/realtime/32677631.jpg&s=Y&x=0&y=0&sw=5616&sh=3744&h=300&w=400" class="w-100" alt="桌機圖">
-      </div>
-      <div class="col-md-6 d-flex justify-content-center align-items-center mt-4 mt-md-0">
-        <div class="d-flex flex-column">
-          <h2 class="mb-4 fw-bold text-center">極高的品質</h2>
-          <p class="mb-2 text-center">我們致力於種植品質最高的水果</p>
-          <p class="mb-2 text-center">給予客戶最崇高的敬意</p>
-        </div>
-      </div>
-    </div>
-    <h2 class="mb-1 text-center">客戶評論</h2>
-    <ClientOnly>
-      <div id="carouselComment" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-        <div class="carousel-inner">
-          <div
-            v-for="(review, index) in reviewsList.length / reviewsSplitCount"
-            :class="['carousel-item', { active: index === 0 }]"
-          >
-            <div class="row">
-              <div class="col-md-4" 
-                v-for="item in reviewsList.slice(index * reviewsSplitCount, index * reviewsSplitCount + reviewsSplitCount)" :key="index">
-                <div class="d-flex flex-column align-items-center p-4">
-                  <i class="bi bi-person" style="font-size: 6em;"></i>
-                  <p class="text-muted text-center mb-3" style="max-width: 200px;">"{{ item.comment }}"</p>
-                  <div class="mb-2">
-                    <span v-for="n in 5" :key="n">
-                      <i :class="n <= item.rating ? 'text-warning bi bi-star-fill mx-1' : 'text-secondary bi bi-star mx-1'"></i>
-                    </span>
+  <div>
+    <v-container class="my-5 v-container-padding">
+      <v-row class="custom-margin-b-8">
+        <v-col cols="12" md="6">
+          <img src="https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/07/23/realtime/32677631.jpg&s=Y&x=0&y=0&sw=5616&sh=3744&h=300&w=400" class="w-100" alt="桌機圖">
+        </v-col>
+        <v-col cols="12" md="6" class="d-flex custom-justify-center custom-align-center mt-4 mt-md-0">
+          <div class="d-flex flex-column">
+            <h2 class="mb-4 fw-bold text-center">極高的品質</h2>
+            <p class="mb-2 text-center">我們致力於種植品質最高的水果</p>
+            <p class="mb-2 text-center">給予客戶最崇高的敬意</p>
+          </div>
+        </v-col>
+      </v-row>
+      <h2 class="mb-1 text-center">客戶評論</h2>
+      <ClientOnly>
+        <div id="carouselComment" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+          <div class="carousel-inner">
+            <div
+              v-for="(review, index) in reviewsList.length / reviewsSplitCount"
+              :class="['carousel-item', { active: index === 0 }]"
+            >
+              <v-row>
+                <v-col cols="12" md="4"
+                  v-for="item in reviewsList.slice(index * reviewsSplitCount, index * reviewsSplitCount + reviewsSplitCount)" :key="index">
+                  <div class="d-flex flex-column custom-align-center p-4">
+                    <i class="bi bi-person" style="font-size: 6em;"></i>
+                    <p class="text-muted text-center mb-3" style="max-width: 200px;">"{{ item.comment }}"</p>
+                    <div class="mb-2">
+                      <span v-for="n in 5" :key="n">
+                        <i :class="n <= item.rating ? 'text-warning bi bi-star-fill mx-1' : 'text-secondary bi bi-star mx-1'"></i>
+                      </span>
+                    </div>
+                    <h6 class="fw-bold">{{ item.name }}</h6>
                   </div>
-                  <h6 class="fw-bold">{{ item.name }}</h6>
-                </div>
-              </div>
+                </v-col>
+              </v-row>
             </div>
           </div>
+          <button class="carousel-control-prev" style="justify-content: flex-start;" type="button" data-bs-target="#carouselComment" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" style="background-color: brown;"></span>
+          </button>
+          <button class="carousel-control-next" style="justify-content: flex-end;" type="button" data-bs-target="#carouselComment" data-bs-slide="next">
+            <span class="carousel-control-next-icon" style="background-color: brown;"></span>
+          </button>
         </div>
-        <button class="carousel-control-prev" style="justify-content: flex-start;" type="button" data-bs-target="#carouselComment" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" style="background-color: brown;"></span>
-        </button>
-        <button class="carousel-control-next" style="justify-content: flex-end;" type="button" data-bs-target="#carouselComment" data-bs-slide="next">
-          <span class="carousel-control-next-icon" style="background-color: brown;"></span>
-        </button>
-      </div>
-    </ClientOnly>
+      </ClientOnly>
+    </v-container>
   </div>
 </template>
 
