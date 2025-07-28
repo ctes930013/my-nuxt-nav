@@ -12,24 +12,26 @@
         </div>
       </SwiperSlide>
     </Swiper>
-    <div class="container my-8">
-      <v-row class="g-3">
-        <v-col cols="6" sm="4" md="3" v-for="product in productList">
-          <v-card class="carding">
-            <img :src="product.image" class="card-img-top" alt="商品圖片">
-            <h5 class="fw-bold mb-1">{{ product.name }}</h5>
-            <p class="subtitle">{{ product.description }}</p>
-            <v-btn
-              color="primary"
-              block
-              class="custom-mx-auto align-left-md"
-            >
-              加入購物車
-            </v-btn>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
+    <ClientOnly>
+      <div class="container my-8">
+        <v-row class="g-3">
+          <v-col cols="6" sm="4" md="3" v-for="product in productList">
+            <v-card class="carding">
+              <img :src="product.image" class="card-img-top" alt="商品圖片">
+              <h5 class="fw-bold mb-1">{{ product.name }}</h5>
+              <p class="subtitle">{{ product.description }}</p>
+              <v-btn
+                color="primary"
+                block
+                class="custom-mx-auto align-left-md"
+              >
+                加入購物車
+              </v-btn>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 
