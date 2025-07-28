@@ -1,34 +1,17 @@
 <template>
   <div>
-    <ClientOnly>
-      <div id="carouselBanner" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-        <ol class="carousel-indicators">
-          <button
-            v-for="(banner, index) in bannerList"
-            :key="index"
-            type="button"
-            :data-bs-target="'#carouselBanner'"
-            :data-bs-slide-to="index"
-            :class="{ active: index === 0 }"
-            :aria-current="index === 0 ? 'true' : undefined"
-            :aria-label="`Slide ${index + 1}`"
-          ></button>
-        </ol>
-        <div class="carousel-inner">
-          <div v-for="(banner, index) in bannerList" :class="index === 0 ? 'carousel-item active' : 'carousel-item'">
-            <div class="img-container">
-              <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" cover />
-            </div>
-          </div>
+    <Swiper
+      :slides-per-view="1"
+      :loop="true"
+      :autoplay="{ delay: 3000 }"
+      :pagination="pagination"
+    >
+      <SwiperSlide v-for="(banner, i) in bannerList" :key="i">
+        <div class="img-container">
+          <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" cover />
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselBanner" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
-    </ClientOnly>
+      </SwiperSlide>
+    </Swiper>
     <div class="container my-8">
       <v-row class="g-3">
         <v-col cols="6" sm="4" md="3" v-for="product in productList">
@@ -51,6 +34,16 @@
 </template>
 
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import SwiperCore from 'swiper'
+import { Autoplay, Pagination } from 'swiper/modules'
+
+SwiperCore.use([Autoplay, Pagination])
+const pagination = {
+    clickable: true
+  }
 const productList = [
     {
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A5%97%E8%A2%8B%E8%91%A1%E8%90%84.jpg",
@@ -88,12 +81,16 @@ const bannerList = [
 </script>
 
 <style lang="css">
-/* banner指示器改用圓形 */
-.carousel-indicators button {
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 100%;
+/* banner指示器 */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
   margin: 0px 5px !important;
+  background-color: #FFFFFF;
+  opacity: 0.8;
+}
+.swiper-pagination-bullet-active {
+  background-color: #CE0000;
 }
 .subtitle {
   display: -webkit-box;             /* 建立彈性盒模型 */

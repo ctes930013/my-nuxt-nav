@@ -14,7 +14,32 @@
         </v-col>
       </v-row>
       <h2 class="mb-1 text-center">客戶評論</h2>
-      <ClientOnly>
+      <Swiper
+        :slides-per-view="1"
+        :loop="true"
+        :autoplay="{ delay: 5000 }"
+        navigation
+        class="swiper"
+      >
+        <SwiperSlide v-for="(review, index) in reviewsList.length / reviewsSplitCount">
+          <v-row>
+            <v-col cols="12" md="4" class="pa-0"
+              v-for="item in reviewsList.slice(index * reviewsSplitCount, index * reviewsSplitCount + reviewsSplitCount)" :key="index">
+              <div class="d-flex flex-column custom-align-center p-4">
+                <i class="bi bi-person" style="font-size: 6em;"></i>
+                <p class="text-muted text-center mb-3" style="max-width: 200px;">"{{ item.comment }}"</p>
+                <div class="mb-2">
+                  <span v-for="n in 5" :key="n">
+                    <i :class="n <= item.rating ? 'text-warning bi bi-star-fill mx-1' : 'text-secondary bi bi-star mx-1'"></i>
+                  </span>
+                </div>
+                <h6 class="fw-bold">{{ item.name }}</h6>
+              </div>
+            </v-col>
+          </v-row>
+        </SwiperSlide>
+      </Swiper>
+      <!-- <ClientOnly>
         <div id="carouselComment" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
           <div class="carousel-inner">
             <div
@@ -45,12 +70,20 @@
             <span class="carousel-control-next-icon" style="background-color: brown;"></span>
           </button>
         </div>
-      </ClientOnly>
+      </ClientOnly> -->
     </v-container>
   </div>
 </template>
 
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/navigation';
+import SwiperCore from 'swiper'
+import { Autoplay, Navigation } from 'swiper/modules'
+
+SwiperCore.use([Autoplay, Navigation])
+
 //評論要切幾等分
 const reviewsSplitCount = ref(1)
 const { isMobile } = useIsMobile()
@@ -66,3 +99,10 @@ const reviewsList = [
   { name: "許小姐", comment: "價格便宜又實惠。", rating: 4 }
 ]
 </script>
+
+<style scoped>
+.swiper {
+  --swiper-navigation-color: #272727;
+  --swiper-navigation-size: 22px;
+}
+</style>
