@@ -8,7 +8,7 @@
     >
       <SwiperSlide v-for="(banner, i) in bannerList" :key="i">
         <div class="img-container">
-          <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" cover />
+          <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" @click="handleBannerClick(banner, i)" cover />
         </div>
       </SwiperSlide>
     </Swiper>
@@ -78,6 +78,11 @@ const bannerList = [
         image: "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/07/17/realtime/32606289.jpg&s=Y&x=0&y=0&sw=3535&sh=2357&h=300&w=400"
     }
 ];
+
+//偵測banner點擊事件
+function handleBannerClick(banner, index) {
+  console.log('你點擊了 banner：', banner, '索引:', index)
+}
 </script>
 
 <style lang="css">
