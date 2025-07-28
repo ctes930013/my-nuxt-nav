@@ -1,52 +1,57 @@
 <template>
-  <div class="main">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid">
-        <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
-        <button
-          id="btnNavToggle"
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <NuxtLink class="nav-link" to="/" :class="{ active: $route.path === '/' }" @click="collapseNavbar">首頁</NuxtLink>
-            </li>
-            <li class="nav-item">
-              <NuxtLink class="nav-link" to="/about" :class="{ active: $route.path === '/about' }" @click="collapseNavbar">關於我們</NuxtLink>
-            </li>
-            <li class="nav-item">
-              <NuxtLink class="nav-link" to="/contact" :class="{ active: $route.path === '/contact' }" @click="collapseNavbar">聯絡我們</NuxtLink>
-            </li>
-          </ul>
+  <div>
+    <v-app>
+      <v-app-bar app color="primary" dark>
+        <v-toolbar-title>
+          <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
+        </v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <!-- 電腦板的選單 -->
+        <div class="d-none d-sm-flex">
+          <v-btn text to="/">首頁</v-btn>
+          <v-btn text to="/about">關於我們</v-btn>
+          <v-btn text to="/contact">聯絡我們</v-btn>
         </div>
-      </div>
-    </nav>
 
-    <main>
-      <NuxtPage />
-    </main>
+        <!-- 手機板的漢堡選單 -->
+        <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-sm-none">
+          <i class="bi bi-list"></i>
+        </v-app-bar-nav-icon>
+      </v-app-bar>
 
-    <Footer class="main-bottom"></Footer>
+      <v-navigation-drawer
+        v-model="drawer"
+        temporary
+        location="right"
+        class="d-sm-none"
+      >
+        <v-list>
+          <v-list-item to="/">首頁</v-list-item>
+          <v-list-item to="/about">關於我們</v-list-item>
+          <v-list-item to="/contact">聯絡我們</v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-main class="main">
+        <NuxtPage />
+      </v-main>
+
+      <Footer class="main-bottom"></Footer>
+    </v-app>
   </div>
 </template>
 
 <script setup>
-const { isMobile } = useIsMobile()
+import { ref } from 'vue'
 
-//收闔nav選單
-const collapseNavbar = () => {
-    if (isMobile.value) {
-        const collapseElement = document.getElementById('btnNavToggle')
-        collapseElement.click()
-    }
-}
+const drawer = ref(false)
 </script>
+
+<style scoped>
+.nav-bar-icon {
+  --v-btn-size: 24px !important;
+  border-radius: 0%;
+}
+</style>
