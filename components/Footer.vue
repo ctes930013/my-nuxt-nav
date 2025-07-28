@@ -7,9 +7,15 @@
           <p class="mb-0">Copyright © 2025 BlueBird Inc.</p>
         </v-col>
         <v-col cols="12" md="4" class="mb-4">
-          <NuxtLink class="nav-link" to="/" style="padding-top: 0px;">首頁</NuxtLink>
-          <NuxtLink class="nav-link" to="/about">關於</NuxtLink>
-          <NuxtLink class="nav-link" to="/contact">聯絡</NuxtLink>
+          <div class="w-100">
+            <NuxtLink class="nav-link d-inline-block" to="/" style="padding-top: 0px;">首頁</NuxtLink>
+          </div>
+          <div class="w-100">
+            <NuxtLink class="nav-link d-inline-block" to="/about">關於我們</NuxtLink>
+          </div>
+          <div class="w-100">
+            <NuxtLink class="nav-link d-inline-block" to="/contact">聯絡我們</NuxtLink>
+          </div>
         </v-col>
         <v-col cols="12" md="4" class="mb-4">
           <p class="mb-0">聯絡我們</p>
