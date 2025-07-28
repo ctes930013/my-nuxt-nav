@@ -39,38 +39,6 @@
           </v-row>
         </SwiperSlide>
       </Swiper>
-      <!-- <ClientOnly>
-        <div id="carouselComment" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-          <div class="carousel-inner">
-            <div
-              v-for="(review, index) in reviewsList.length / reviewsSplitCount"
-              :class="['carousel-item', { active: index === 0 }]"
-            >
-              <v-row>
-                <v-col cols="12" md="4"
-                  v-for="item in reviewsList.slice(index * reviewsSplitCount, index * reviewsSplitCount + reviewsSplitCount)" :key="index">
-                  <div class="d-flex flex-column custom-align-center p-4">
-                    <i class="bi bi-person" style="font-size: 6em;"></i>
-                    <p class="text-muted text-center mb-3" style="max-width: 200px;">"{{ item.comment }}"</p>
-                    <div class="mb-2">
-                      <span v-for="n in 5" :key="n">
-                        <i :class="n <= item.rating ? 'text-warning bi bi-star-fill mx-1' : 'text-secondary bi bi-star mx-1'"></i>
-                      </span>
-                    </div>
-                    <h6 class="fw-bold">{{ item.name }}</h6>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-          </div>
-          <button class="carousel-control-prev" style="justify-content: flex-start;" type="button" data-bs-target="#carouselComment" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" style="background-color: brown;"></span>
-          </button>
-          <button class="carousel-control-next" style="justify-content: flex-end;" type="button" data-bs-target="#carouselComment" data-bs-slide="next">
-            <span class="carousel-control-next-icon" style="background-color: brown;"></span>
-          </button>
-        </div>
-      </ClientOnly> -->
     </v-container>
   </div>
 </template>
