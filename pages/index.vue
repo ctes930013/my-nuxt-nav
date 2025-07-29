@@ -37,6 +37,7 @@
 </template>
 
 <script setup>
+import { useSweetAlert } from '~/composables/useSweetAlert'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -101,14 +102,12 @@ function productClick(productId) {
 
 //偵測購物車點擊事件
 function addCart() {
-  const { $swal } = useNuxtApp()
-  $swal.fire({
-    scrollbarPadding: false,
+  const { showAlert } = useSweetAlert()
+  showAlert({
     title: '成功加入購物車',
     icon: 'success',
-    confirmButtonText: '確定',
-    customClass: {
-      confirmButton: 'custom-confirm-button'
+    onConfirm: () => {
+      console.log('用戶點擊了確定按鈕')
     }
   })
 }

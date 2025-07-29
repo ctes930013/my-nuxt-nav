@@ -48,3 +48,9 @@
   color: #FFFFFF !important;    /* 文字顏色 */
   background-color: #0D6EFF !important;   /* 背景顏色 */
 }
+
+/* 確認彈窗的取消按鈕樣式 */
+.custom-cancel-button {
+  color: #FFFFFF !important;    /* 文字顏色 */
+  background-color: red !important;   /* 背景顏色 */
+}
