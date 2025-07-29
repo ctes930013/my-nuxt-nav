@@ -103,6 +103,7 @@ function productClick(productId) {
 function addCart() {
   const { $swal } = useNuxtApp()
   $swal.fire({
+    scrollbarPadding: false,
     title: '成功加入購物車',
     icon: 'success',
     confirmButtonText: '確定',
