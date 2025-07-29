@@ -24,6 +24,7 @@
                 color="primary"
                 block
                 class="custom-mx-auto align-left-md"
+                @click.stop="addCart()"
               >
                 加入購物車
               </v-btn>
@@ -95,6 +96,19 @@ function productClick(productId) {
   navigateTo({
     path: '/product',
     query: { id: productId }
+  })
+}
+
+//偵測購物車點擊事件
+function addCart() {
+  const { $swal } = useNuxtApp()
+  $swal.fire({
+    title: '成功加入購物車',
+    icon: 'success',
+    confirmButtonText: '確定',
+    customClass: {
+      confirmButton: 'custom-confirm-button'
+    }
   })
 }
 </script>

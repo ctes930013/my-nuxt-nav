@@ -42,3 +42,9 @@
 .custom-align-center {
   align-items: center;
 }
+
+/* 確認彈窗的確定按鈕樣式 */
+.custom-confirm-button {
+  color: #FFFFFF !important;    /* 文字顏色 */
+  background-color: #0D6EFF !important;   /* 背景顏色 */
+}
