@@ -16,7 +16,7 @@
       <div class="container my-8">
         <v-row class="g-3">
           <v-col cols="6" sm="4" md="3" v-for="product in productList">
-            <v-card class="carding">
+            <v-card class="carding" @click="productClick(product.id)">
               <img :src="product.image" class="card-img-top" alt="商品圖片">
               <h5 class="fw-bold mb-1">{{ product.name }}</h5>
               <p class="subtitle">{{ product.description }}</p>
@@ -44,25 +44,29 @@ import { Autoplay, Pagination } from 'swiper/modules'
 
 SwiperCore.use([Autoplay, Pagination])
 const pagination = {
-    clickable: true
-  }
+  clickable: true
+}
 const productList = [
     {
+        id: 1,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A5%97%E8%A2%8B%E8%91%A1%E8%90%84.jpg",
         name: "葡萄",
         description: "熟成採收｜濃郁果香"
     },
     {
+        id: 2,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E8%8D%B7%E5%8C%85%E8%8D%94%E6%9E%9D.jpg",
         name: "荔枝",
         description: "一年一次！季節限定"
     },
     {
+        id: 3,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%B0%8F%E7%8E%89%E8%A5%BF%E7%93%9C.jpg",
         name: "西瓜",
         description: "甜蜜蜜的好滋味「小玉西瓜」，夏日清涼必備！"
     },
     {
+        id: 4,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E6%96%87%E8%8A%92%E6%9E%9C.jpg",
         name: "芒果",
         description: "新品種•甜度高"
@@ -85,18 +89,26 @@ const bannerList = [
 function handleBannerClick(banner, index) {
   console.log('你點擊了 banner：', banner, '索引:', index)
 }
+
+//偵測商品點擊事件
+function productClick(productId) {
+  navigateTo({
+    path: '/product',
+    query: { id: productId }
+  })
+}
 </script>
 
-<style lang="css">
+<style scoped>
 /* banner指示器 */
-.swiper-pagination-bullet {
+:deep(.swiper-pagination-bullet) {
   width: 10px;
   height: 10px;
   margin: 0px 5px !important;
   background-color: #FFFFFF;
   opacity: 0.8;
 }
-.swiper-pagination-bullet-active {
+:deep(.swiper-pagination-bullet-active) {
   background-color: #CE0000;
 }
 .subtitle {
