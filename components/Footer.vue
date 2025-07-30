@@ -16,6 +16,9 @@
           <div class="w-100">
             <NuxtLink class="nav-link d-inline-block" to="/contact">聯絡我們</NuxtLink>
           </div>
+          <div class="w-100">
+            <NuxtLink class="nav-link d-inline-block" to="/cart">購物車</NuxtLink>
+          </div>
         </v-col>
         <v-col cols="12" md="4" class="mb-4">
           <p class="mb-0">聯絡我們</p>

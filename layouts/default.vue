@@ -13,6 +13,7 @@
           <v-btn text to="/">首頁</v-btn>
           <v-btn text to="/about">關於我們</v-btn>
           <v-btn text to="/contact">聯絡我們</v-btn>
+          <v-btn text to="/cart">購物車</v-btn>
         </div>
 
         <!-- 手機板的漢堡選單 -->
@@ -31,6 +32,7 @@
           <v-list-item to="/">首頁</v-list-item>
           <v-list-item to="/about">關於我們</v-list-item>
           <v-list-item to="/contact">聯絡我們</v-list-item>
+          <v-list-item to="/cart">購物車</v-list-item>
         </v-list>
       </v-navigation-drawer>
 
