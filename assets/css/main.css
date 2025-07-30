@@ -37,10 +37,10 @@
 
 /* 確保與 Bootstrap 的樣式一致 */
 .custom-justify-center {
-  justify-content: center;
+  justify-content: center;    /* 垂直居中 */
 }
 .custom-align-center {
-  align-items: center;
+  align-items: center;    /* 水平居中 */
 }
 
 /* 確認彈窗的確定按鈕樣式 */
