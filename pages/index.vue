@@ -8,7 +8,7 @@
     >
       <SwiperSlide v-for="(banner, i) in bannerList" :key="i">
         <div class="img-container">
-          <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" @click="handleBannerClick(banner, i)" cover />
+          <v-img :src="banner.image" class="img-container-fit" alt="桌機圖" @click="handleBannerClick(banner.image, i)" cover />
         </div>
       </SwiperSlide>
     </Swiper>
@@ -24,7 +24,7 @@
                 color="primary"
                 block
                 class="custom-mx-auto align-left-md"
-                @click.stop="addCart()"
+                @click.stop="addCart(product)"
               >
                 加入購物車
               </v-btn>
@@ -36,7 +36,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useCartStore } from '@/stores/cart'
+import type { Product } from '~/types/product'
 import { useSweetAlert } from '~/composables/useSweetAlert'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -48,29 +50,37 @@ SwiperCore.use([Autoplay, Pagination])
 const pagination = {
   clickable: true
 }
-const productList = [
+const productList: Product[] = [
     {
         id: 1,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A5%97%E8%A2%8B%E8%91%A1%E8%90%84.jpg",
         name: "葡萄",
+        price: 100,
+        quantity: 0,
         description: "熟成採收｜濃郁果香"
     },
     {
         id: 2,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E8%8D%B7%E5%8C%85%E8%8D%94%E6%9E%9D.jpg",
         name: "荔枝",
+        price: 50,
+        quantity: 0,
         description: "一年一次！季節限定"
     },
     {
         id: 3,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%B0%8F%E7%8E%89%E8%A5%BF%E7%93%9C.jpg",
         name: "西瓜",
+        price: 400,
+        quantity: 0,
         description: "甜蜜蜜的好滋味「小玉西瓜」，夏日清涼必備！"
     },
     {
         id: 4,
         image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E6%96%87%E8%8A%92%E6%9E%9C.jpg",
         name: "芒果",
+        price: 80,
+        quantity: 0,
         description: "新品種•甜度高"
     }
 ];
@@ -88,12 +98,12 @@ const bannerList = [
 ];
 
 //偵測banner點擊事件
-function handleBannerClick(banner, index) {
+function handleBannerClick(banner: string, index: number) {
   console.log('你點擊了 banner：', banner, '索引:', index)
 }
 
 //偵測商品點擊事件
-function productClick(productId) {
+function productClick(productId: number) {
   navigateTo({
     path: '/product',
     query: { id: productId }
@@ -101,14 +111,22 @@ function productClick(productId) {
 }
 
 //偵測購物車點擊事件
-function addCart() {
+function addCart(product: Product) {
+  const cartStore = useCartStore()
   const { showAlert } = useSweetAlert()
+
+  cartStore.addToCart(product)
   showAlert({
     title: '成功加入購物車',
+    text: "",
     icon: 'success',
+    confirmText: "",
+    isCanCancel: false,
+    cancelText: "",
     onConfirm: () => {
       console.log('用戶點擊了確定按鈕')
-    }
+    },
+    onCancel: null
   })
 }
 </script>
