@@ -118,15 +118,10 @@ function addCart(product: Product) {
   cartStore.addToCart(product)
   showAlert({
     title: '成功加入購物車',
-    text: "",
     icon: 'success',
-    confirmText: "",
-    isCanCancel: false,
-    cancelText: "",
     onConfirm: () => {
       console.log('用戶點擊了確定按鈕')
     },
-    onCancel: null
   })
 }
 </script>
