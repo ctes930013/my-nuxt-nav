@@ -9,16 +9,23 @@
             :autoplay="{ delay: 3000 }"
             :pagination="pagination"
             >
-            <SwiperSlide v-for="(banner, i) in bannerList" :key="i">
+            <SwiperSlide v-for="(banner, i) in productData?.banner" :key="i">
               <v-img :src="banner" cover />
             </SwiperSlide>
           </Swiper>
         </v-col>
         <v-col cols="12" md="6" class="d-flex custom-justify-center custom-align-center mt-4 mt-md-0">
           <div class="d-flex flex-column">
-            <h2 class="mb-4 fw-bold text-center">{{ title }}</h2>
-            <p class="mb-2 text-center">富有果肉，多嫩多汁</p>
-            <p class="mb-2 text-center">營養又可口</p>
+            <h2 class="mb-4 fw-bold text-center">{{ productData?.name }}</h2>
+            <p class="mb-2 text-center">{{ productData?.description }}</p>
+            <p class="mb-10 text-center">營養又可口</p>
+            <v-btn
+              color="primary"
+              class="custom-mx-auto"
+              @click.stop="addCart(productData!!)"
+            >
+              加入購物車
+            </v-btn>
           </div>
         </v-col>
       </v-row>
@@ -26,7 +33,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useCartStore } from '@/stores/cart'
+import type { Product } from '~/types/product'
+import { productList } from '~/datas/products'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -38,40 +48,30 @@ const pagination = {
     clickable: true
 }
 
-var title = ref("")
-var bannerList = ref([]);
+var productData = ref<Product>()
 
 const route = useRoute()
+
 //取得上頁傳進來的id
-const productId = parseInt(route.query.id)
-switch (productId) {
-    case 1:
-        title = "袋套葡萄"
-        bannerList = [
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A5%97%E8%A2%8B%E8%91%A1%E8%90%84.jpg",
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%B7%A8%E5%B3%B0%E8%91%A1%E8%90%84.jpg"
-        ]
-        break
-    case 2:
-        title = "嘉義荔枝"
-        bannerList = [
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E8%8D%B7%E5%8C%85%E8%8D%94%E6%9E%9D.jpg",
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E9%BB%91%E8%91%89%E8%8D%94%E6%9E%9D.jpg"
-        ]
-        break
-    case 3:
-        title = "黃色西瓜"
-        bannerList = [
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%B0%8F%E7%8E%89%E8%A5%BF%E7%93%9C.jpg"
-        ]
-        break
-    default:
-        title = "二號芒果"
-        bannerList = [
-            "https://youli-fruits.com/wp-content/uploads/2021/07/%E5%8F%B0%E8%BE%B21%E8%99%9F.jpg",
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A4%8F%E9%9B%AA%E8%8A%92%E6%9E%9C.jpg",
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E8%A5%BF%E6%96%BD%E8%8A%92%E6%9E%9C%E6%8B%B7%E8%B2%9D.jpg"
-        ]
-        break
+var productId: number = 0
+if (typeof route.query.id === 'string') {
+  productId = parseInt(route.query.id)
+}
+
+productData.value = productList.find((item) => item.id === productId)
+
+//偵測購物車點擊事件
+function addCart(product: Product) {
+  const cartStore = useCartStore()
+  const { showAlert } = useSweetAlert()
+
+  cartStore.addToCart(product)
+  showAlert({
+    title: '成功加入購物車',
+    icon: 'success',
+    onConfirm: () => {
+      console.log('用戶點擊了確定按鈕')
+    },
+  })
 }
 </script>

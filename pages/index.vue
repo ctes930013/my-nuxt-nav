@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
 import type { Product } from '~/types/product'
+import { productList } from '~/datas/products'
 import { useSweetAlert } from '~/composables/useSweetAlert'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -50,40 +51,6 @@ SwiperCore.use([Autoplay, Pagination])
 const pagination = {
   clickable: true
 }
-const productList: Product[] = [
-    {
-        id: 1,
-        image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A5%97%E8%A2%8B%E8%91%A1%E8%90%84.jpg",
-        name: "葡萄",
-        price: 100,
-        quantity: 0,
-        description: "熟成採收｜濃郁果香"
-    },
-    {
-        id: 2,
-        image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E8%8D%B7%E5%8C%85%E8%8D%94%E6%9E%9D.jpg",
-        name: "荔枝",
-        price: 50,
-        quantity: 0,
-        description: "一年一次！季節限定"
-    },
-    {
-        id: 3,
-        image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%B0%8F%E7%8E%89%E8%A5%BF%E7%93%9C.jpg",
-        name: "西瓜",
-        price: 400,
-        quantity: 0,
-        description: "甜蜜蜜的好滋味「小玉西瓜」，夏日清涼必備！"
-    },
-    {
-        id: 4,
-        image: "https://youli-fruits.com/wp-content/uploads/2021/08/%E7%8E%89%E6%96%87%E8%8A%92%E6%9E%9C.jpg",
-        name: "芒果",
-        price: 80,
-        quantity: 0,
-        description: "新品種•甜度高"
-    }
-];
 
 const bannerList = [
     {
