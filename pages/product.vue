@@ -29,6 +29,18 @@
           </div>
         </v-col>
       </v-row>
+      <div class="container my-4">
+        <h2 class="fw-bold mb-4">相關產品:</h2>
+        <v-row class="g-3">
+          <v-col cols="6" sm="4" md="4" v-for="product in relativeProductList">
+            <ProductCard 
+              :product="product"
+              :onProductClick="productClick"
+              :onAddToCart="addCart"
+            />
+          </v-col>
+        </v-row>
+      </div>
     </v-container>
   </div>
 </template>
@@ -49,16 +61,45 @@ const pagination = {
 }
 
 var productData = ref<Product>()
+var relativeProductList = ref([] as Product[])
 
 const route = useRoute()
 
-//取得上頁傳進來的id
-var productId: number = 0
-if (typeof route.query.id === 'string') {
-  productId = parseInt(route.query.id)
+//取得產品資料
+function getProductData(id: number = 0) {
+  //取得上頁傳進來的id
+  var productId: number = id
+  if (id == 0 && typeof route.query.id === 'string') {
+    productId = parseInt(route.query.id)
+  }
+
+  productData.value = productList.find((item) => item.id === productId)
+
+  //取得相關產品
+  relativeProductList.value = []
+  productList.forEach((item) => {
+    if(item.id != productId) {
+      relativeProductList.value.push(item)
+    }
+  })
 }
 
-productData.value = productList.find((item) => item.id === productId)
+getProductData()
+
+//監聽產品路由跳轉(因為同一個頁面vue預設不會自動刷新)
+watch(() => route.query.id, (newId) => {
+  if (typeof newId === 'string') {
+    getProductData(parseInt(newId))
+  }
+}, { immediate: true })
+
+//偵測商品點擊事件
+function productClick(productId: number) {
+  navigateTo({
+    path: '/product',
+    query: { id: productId }
+  })
+}
 
 //偵測購物車點擊事件
 function addCart(product: Product) {
