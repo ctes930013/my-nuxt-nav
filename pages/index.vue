@@ -16,19 +16,11 @@
       <div class="container my-8">
         <v-row class="g-3">
           <v-col cols="6" sm="4" md="3" v-for="product in productList">
-            <v-card class="carding" @click="productClick(product.id)">
-              <img :src="product.image" class="card-img-top" alt="商品圖片">
-              <h5 class="fw-bold mb-1">{{ product.name }}</h5>
-              <p class="subtitle">{{ product.description }}</p>
-              <v-btn
-                color="primary"
-                block
-                class="custom-mx-auto align-left-md"
-                @click.stop="addCart(product)"
-              >
-                加入購物車
-              </v-btn>
-            </v-card>
+            <ProductCard 
+              :product="product"
+              :onProductClick="productClick"
+              :onAddToCart="addCart"
+            />
           </v-col>
         </v-row>
       </div>
@@ -46,6 +38,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import SwiperCore from 'swiper'
 import { Autoplay, Pagination } from 'swiper/modules'
+import ProductCard from '~/components/ProductCard.vue'
 
 SwiperCore.use([Autoplay, Pagination])
 const pagination = {
@@ -105,22 +98,6 @@ function addCart(product: Product) {
 :deep(.swiper-pagination-bullet-active) {
   background-color: #CE0000;
 }
-.subtitle {
-  display: -webkit-box;             /* 建立彈性盒模型 */
-  -webkit-box-orient: vertical;     /* 垂直方向排列 */
-  -webkit-line-clamp: 2;            /* 最多顯示兩行 */
-  line-clamp: 2;
-  overflow: hidden;                 /* 隱藏超出的內容 */
-  text-overflow: ellipsis;         /* 超出用省略號顯示 */
-  word-break: break-word;          /* 單字換行 */
-  min-height: 3em;                 /* 根據行高大致估算兩行文字高度 */
-  line-height: 1.5em;
-}
-.carding {
-  border-radius: 12px !important; /* 自訂圓角大小 */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important; /* 自訂陰影 */
-  padding: 15px 20px;
-}
 .img-container {
   position: relative;
   padding-bottom: 75%; /* 4:3 比例 */
@@ -136,14 +113,6 @@ function addCart(product: Product) {
 @media (min-width: 768px) {
   .img-container {
     padding-bottom: 25%; /* 4:1 比例 */
-  }
-}
-@media (min-width: 960px) {
-  .align-left-md {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    display: inline-block !important;
-    min-width: auto !important;    /* 讓按鈕不要滿版 */
   }
 }
 </style>
