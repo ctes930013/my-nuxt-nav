@@ -8,6 +8,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     components,
     directives,
+    defaults: {
+      global: {
+        ripple: false,     // 🚫 關閉所有 ripple 效果
+      }
+    },
     ssr: true
   })
 
