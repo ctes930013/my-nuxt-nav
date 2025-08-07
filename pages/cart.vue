@@ -15,25 +15,25 @@
           <v-col cols="12" v-for="(product, index) in cartStore.items">
             <v-row class="g-3">
               <v-col cols="8" class="pa-0">
-                <div class="d-flex custom-align-center">
+                <v-row align="center" class="ma-0">
                   <img :src="product.image" height="100px" alt="桌機圖">
                   <h3 class="fw-bold mx-4 mb-0">{{ product.name }}</h3>
-                </div>
+                </v-row>
               </v-col>
               <v-col cols="4" class="d-flex justify-content-end custom-align-center pa-0">
-                <div class="d-flex flex-column mr-2">
+                <v-col class="mr-2">
                   <i class="d-flex justify-content-end bi bi-x-lg" @click="cartStore.removeFromCart(product.id)"></i>
                   <div class="d-flex justify-content-end custom-align-center mt-1">
                     <i class="bi bi-dash-square" @click="minus(product)"></i>
                     <h4 class="mx-3 text-center mb-0">{{ product.quantity }}</h4>
                     <i class="bi bi-plus-square" @click="add(product)"></i>
                   </div>
-                  <div class="d-flex justify-content-end custom-align-center mt-1">
+                  <v-row justify="end" align="center" class="ma-0 mt-1">
                     <p class="mb-0">單價:</p>
                     <p class="mb-0 mx-1">{{ thousandth(product.price) }}</p>
                     <p class="mb-0">元</p>
-                  </div>
-                </div>
+                  </v-row>
+                </v-col>
               </v-col>
               <v-divider v-if="index < cartStore.items.length - 1" class="my-2" />
             </v-row>
