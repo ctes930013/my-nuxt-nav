@@ -13,7 +13,8 @@
               </v-col>
               <v-col cols="4" class="d-flex custom-align-center pa-0" style="justify-content: right">
                 <div class="d-flex flex-column mr-2">
-                  <div class="d-flex custom-align-center" style="justify-content: right">
+                  <i class="d-flex bi bi-x-lg" style="justify-content: right" @click="cartStore.removeFromCart(product.id)"></i>
+                  <div class="d-flex custom-align-center mt-1" style="justify-content: right">
                     <i class="bi bi-dash-square" @click="minus(product)"></i>
                     <h4 class="mx-3 text-center mb-0">{{ product.quantity }}</h4>
                     <i class="bi bi-plus-square" @click="add(product)"></i>
@@ -30,9 +31,9 @@
           </v-col>
         </v-row>
         <div class="d-flex custom-align-center mt-8" style="justify-content: right">
-            <p class="mb-0">總價:</p>
-            <h2 class="mb-0 mx-2" style="color: red">{{ thousandth(cartStore.totalPrice) }}</h2>
-            <p class="mb-0">元</p>
+          <p class="mb-0">總價:</p>
+          <h2 class="mb-0 mx-2" style="color: red">{{ thousandth(cartStore.totalPrice) }}</h2>
+          <p class="mb-0">元</p>
         </div>
       </div>
       <div v-else class="d-flex flex-column custom-align-center">
