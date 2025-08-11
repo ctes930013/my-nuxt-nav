@@ -18,7 +18,8 @@ export default defineNuxtConfig({
     'bootstrap/dist/css/bootstrap.min.css',
     'bootstrap-icons/font/bootstrap-icons.css',
     '~/assets/css/main.css',
-    'vuetify/styles'
+    'vuetify/styles',
+    '@mdi/font/css/materialdesignicons.min.css',
   ],
   build: {
     transpile: ['vuetify']

@@ -14,9 +14,15 @@
           <v-btn text to="/about">關於我們</v-btn>
           <v-btn text to="/contact">聯絡我們</v-btn>
           <v-btn text to="/cart">購物車</v-btn>
+          <v-btn to="/signin">
+            <i class="bi bi-person-circle"></i>
+          </v-btn>
         </div>
 
         <!-- 手機板的漢堡選單 -->
+        <v-btn class="d-sm-none" style="min-width: auto; padding: 0.25rem;" to="/signin">
+          <i class="bi bi-person-circle"></i>
+        </v-btn>
         <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-sm-none">
           <i class="bi bi-list"></i>
         </v-app-bar-nav-icon>
