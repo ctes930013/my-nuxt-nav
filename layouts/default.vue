@@ -101,15 +101,9 @@ onUnmounted(() => {
 
 //檢查要將用戶導去哪個頁面
 function checkUserPage() {
-  if (userStore.isLoggedIn) {
-    navigateTo({
-      path: '/cart',
-    })
-  } else {
-    navigateTo({
-      path: '/signin',
-    })
-  }
+  navigateTo({
+    path: '/signin',
+  })
 }
 
 //登出
