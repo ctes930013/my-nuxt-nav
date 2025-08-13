@@ -95,7 +95,7 @@ const submitForm = async () => {
     Object.entries(form.value).forEach(([key, value]) => {
       formData.append(key, value)
     });
-    console.log(fileImg.value)
+    formData.append('image', fileImg.value)
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}: ${pair[1]}`);
     }

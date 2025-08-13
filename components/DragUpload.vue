@@ -50,10 +50,11 @@ const onFileChange = (e) => {
     preview.value = URL.createObjectURL(file)
     uploadFile(file)
   }
+  // 清空 input value，避免同檔案不觸發 change
+   e.target.value = ''
 }
 
 const uploadFile = async (file) => {
-  const key = 'image'
   fileValue.value = file
 }
 </script>
