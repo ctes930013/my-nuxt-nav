@@ -14,61 +14,36 @@
           <v-btn text to="/about">關於我們</v-btn>
           <v-btn text to="/contact">聯絡我們</v-btn>
           <v-btn text to="/cart">購物車</v-btn>
+        </div>
 
-          <!-- 已登入就用懸浮選單 -->
-          <div v-if="userStore.isLoggedIn">
-            <v-menu v-model="desktopMenu" :close-on-content-click="false" open-on-hover open-on-click>
-              <!-- 激活選單的按鈕 -->
-              <template v-slot:activator="{ props }">
-                <v-btn v-bind="props">
-                  <i class="bi bi-person-circle"></i>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item to="/userinfo" @click="desktopMenu = false">
-                  <v-list-item-title>會員資料</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="logout">
-                  <v-list-item-title>登出</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
-          <!-- 未登入就用一般按鈕 -->
-          <div v-else>
-            <v-btn @click="checkUserPage">
-              <i class="bi bi-person-circle"></i>
-            </v-btn>
-          </div>
+        <!-- 會員中心 -->
+        <!-- 已登入就用懸浮選單 -->
+        <div v-if="userStore.isLoggedIn">
+          <v-menu v-model="desktopMenu" :close-on-content-click="false" open-on-hover open-on-click>
+            <!-- 激活選單的按鈕 -->
+            <template v-slot:activator="{ props }">
+              <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
+                <i class="bi bi-person-circle"></i>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item to="/userinfo" @click="desktopMenu = false">
+                <v-list-item-title>會員資料</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="logout">
+                <v-list-item-title>登出</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+        <!-- 未登入就用一般按鈕 -->
+        <div v-else>
+          <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
+            <i class="bi bi-person-circle"></i>
+          </v-btn>
         </div>
 
         <!-- 手機板的漢堡選單 -->
-        <div class="d-sm-none">
-          <div v-if="userStore.isLoggedIn">
-            <v-menu v-model="mobileMenu" :close-on-content-click="false" open-on-click>
-              <!-- 激活選單的按鈕 -->
-              <template v-slot:activator="{ props }">
-                <v-btn v-bind="props" style="min-width: auto; padding: 0.25rem;">
-                  <i class="bi bi-person-circle"></i>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item to="/userinfo" @click="mobileMenu = false">
-                  <v-list-item-title>會員資料</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="logout">
-                  <v-list-item-title>登出</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
-          <!-- 未登入就用一般按鈕 -->
-          <div v-else>
-            <v-btn style="min-width: auto; padding: 0.25rem;" @click="checkUserPage">
-              <i class="bi bi-person-circle"></i>
-            </v-btn>
-          </div>
-        </div>
         <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-sm-none">
           <i class="bi bi-list"></i>
         </v-app-bar-nav-icon>
@@ -107,6 +82,8 @@ const desktopMenu = ref(false); // 桌面端選單狀態
 const mobileMenu = ref(false); // 手機端選單狀態
 
 const userStore = useUserStore();
+
+const { isMobile } = useIsMobile()
 
 // 頁面載入時檢查登入狀態
 onMounted(() => {
