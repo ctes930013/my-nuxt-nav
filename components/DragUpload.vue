@@ -19,6 +19,8 @@
 <script setup>
 import { ref } from 'vue'
 
+const fileValue = defineModel('file')
+
 const isOver = ref(false)
 const preview = ref(null)
 const fileInput = ref(null)
@@ -31,16 +33,17 @@ const onDragLeave = () => {
   isOver.value = false
 }
 
+//拖曳上傳
 const onDrop = (e) => {
   isOver.value = false
   const file = e.dataTransfer.files[0]
   if (file && file.type.startsWith('image/')) {
     preview.value = URL.createObjectURL(file)
-    // 這裡可直接呼叫 API 上傳
     uploadFile(file)
   }
 }
 
+//點擊按鈕上傳
 const onFileChange = (e) => {
   const file = e.target.files[0]
   if (file && file.type.startsWith('image/')) {
@@ -50,10 +53,8 @@ const onFileChange = (e) => {
 }
 
 const uploadFile = async (file) => {
-  const formData = new FormData()
-  formData.append('file', file)
-  // 呼叫 API
-  console.log(formData.get('file'))
+  const key = 'image'
+  fileValue.value = file
 }
 </script>
 

@@ -6,7 +6,7 @@
         <v-row class="mt-8">
           <v-col cols="12" align="center">
             <h4>大頭貼</h4>
-            <DragUpload />
+            <DragUpload v-model:file="fileImg" />
           </v-col>
           <v-col cols="12">
             <v-text-field
@@ -79,6 +79,8 @@ const form = ref({
 
 const valid = ref(false)
 const formRef = ref(null)
+var formData = new FormData()
+var fileImg = ref(File)
 
 const rules = {
   required: v => !!v || '此欄位為必填',
@@ -87,9 +89,20 @@ const rules = {
 }
 
 const submitForm = async () => {
+  formData = new FormData()
   const validation = await formRef.value?.validate()
   if (validation.valid) {
-    console.log('送出表單資料：', form.value)
+    Object.entries(form.value).forEach(([key, value]) => {
+      formData.append(key, value)
+    });
+    console.log(fileImg.value)
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+    // fetch('/api/upload', {
+    //     method: 'POST',
+    //     body: formData
+    // })
     alert('表單已送出')
   }
 }
