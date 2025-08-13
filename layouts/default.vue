@@ -19,7 +19,7 @@
         <!-- 會員中心 -->
         <!-- 已登入就用懸浮選單 -->
         <div v-if="userStore.isLoggedIn">
-          <v-menu v-model="desktopMenu" :close-on-content-click="false" open-on-hover open-on-click>
+          <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
             <!-- 激活選單的按鈕 -->
             <template v-slot:activator="{ props }">
               <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
@@ -27,7 +27,7 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item to="/userinfo" @click="desktopMenu = false">
+              <v-list-item to="/userinfo" @click="menu = false">
                 <v-list-item-title>會員資料</v-list-item-title>
               </v-list-item>
               <v-list-item @click="logout">
@@ -77,9 +77,8 @@ import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useSweetAlert } from '~/composables/useSweetAlert'
 
-const drawer = ref(false)
-const desktopMenu = ref(false); // 桌面端選單狀態
-const mobileMenu = ref(false); // 手機端選單狀態
+const drawer = ref(false)  //漢堡包狀態
+const menu = ref(false); // 選單狀態
 
 const userStore = useUserStore();
 
@@ -115,8 +114,7 @@ function checkUserPage() {
 
 //登出
 function logout() {
-  desktopMenu.value = false
-  mobileMenu.value = false
+  menu.value = false
   const { showAlert } = useSweetAlert()
 
   showAlert({
