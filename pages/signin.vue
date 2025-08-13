@@ -37,6 +37,8 @@
 </template>
 
 <script setup>
+import { useSweetAlert } from '~/composables/useSweetAlert'
+import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 
 const form = ref({
@@ -56,7 +58,20 @@ const submitForm = async () => {
   const validation = await formRef.value?.validate()
   if (validation.valid) {
     console.log('送出表單資料：', form.value)
-    alert('表單已送出')
+    const userStore = useUserStore()
+    userStore.login(1)
+    
+    const { showAlert } = useSweetAlert()
+
+    showAlert({
+        title: '登入成功',
+        icon: 'success',
+        onClose: () => {
+            navigateTo({
+                path: '/',
+            })
+        }
+    })
   }
 }
 </script>

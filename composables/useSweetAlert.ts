@@ -9,6 +9,7 @@ interface SweetAlertOptions {
   cancelText?: string
   onConfirm?: () => void
   onCancel?: () => void
+  onClose?: () => void
 }
 
 export function useSweetAlert() {
@@ -22,7 +23,8 @@ export function useSweetAlert() {
     isCanCancel = false,
     cancelText = '取消',
     onConfirm,
-    onCancel
+    onCancel,
+    onClose
   }: SweetAlertOptions = {}) => {
     $swal.fire({
       scrollbarPadding: false,
@@ -35,6 +37,11 @@ export function useSweetAlert() {
       customClass: {
         confirmButton: 'custom-confirm-button',
         cancelButton: 'custom-cancel-button'
+      },
+      willClose: () => {
+        if (onClose) {
+          onClose()
+        }
       }
     }).then((result) => {
       if (result.isConfirmed && onConfirm) {
