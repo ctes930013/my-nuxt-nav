@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', {
   state: () : { userId: number | null } => ({
-    userId: parseInt(sessionStorage.getItem('userId') ?? "0")
+    userId: null,
   }),
 
   getters: {
@@ -11,6 +11,14 @@ export const useUserStore = defineStore('user', {
   },
 
   actions: {
+    // 檢查 sessionStorage 的登入狀態
+    checkAuth() {
+        if (typeof window !== 'undefined') {
+            const storedUserId = sessionStorage.getItem('userId');
+            this.userId = storedUserId ? parseInt(storedUserId) : null;
+        }
+    },
+
     // 將user id儲存到 sessionStorage
     login(id: number) {
         this.userId = id
