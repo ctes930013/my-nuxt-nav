@@ -34,14 +34,32 @@
             />
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
-              v-model="form.expire"
-              label="有效期限(MM/YY)"
-              required
-              maxlength="5"
-              @input="formatCardExpire"
-              :rules="[rules.required]"
-            />
+            <v-row align="center">
+              <v-col cols="12" sm="auto">
+                <span class="text-body-1 font-weight-medium">信用卡有效期限</span>
+              </v-col>
+              <v-col cols="4" sm="3">
+                <v-text-field
+                    v-model="expireMonth"
+                    label="MM"
+                    required
+                    @input="formatCardMonth"
+                    :rules="[rules.required, rules.validMonth]"
+                />
+              </v-col>
+               <v-col cols="auto" sm="auto">
+                <span class="text-h6">/</span>
+              </v-col>
+               <v-col cols="4" sm="3">
+                <v-text-field
+                    v-model="expireYear"
+                    label="YY"
+                    required
+                    @input="formatCardYear"
+                    :rules="[rules.required, rules.validYear]"
+                />
+              </v-col>
+            </v-row>
           </v-col>
           <v-col cols="12" class="text-center">
             <v-btn color="primary" type="submit" class="mt-3">
@@ -66,6 +84,8 @@ const form = reactive({
 
 const valid = ref(false)
 const formRef = ref(null)
+var expireMonth = ref()
+var expireYear = ref()
 var cardNumberLength = 0   //紀錄用戶當前輸入的卡號長度(含空格)
 
 //信用卡號的輸入規則
@@ -112,12 +132,21 @@ function formatCardNumber() {
 }
 
 //信用卡期限的輸入規則
-function formatCardExpire() {
-  let val = form.expire.replace(/\D/g, '') // 只保留數字
+function formatCardMonth() {
+    // 移除非數字字符
+    let value = expireMonth.value.replace(/\D/g, '');
+    // 限制最大長度為 2
+    if (value.length > 2) {
+        value = value.slice(0, 2);
+    }
+    expireMonth.value = value;
+}
+function formatCardYear() {
+  let val = expireYear.value.replace(/\D/g, '') // 只保留數字
   if (val.length > 2) {
     val = val.slice(0, 2) + '/' + val.slice(2)
   }
-  form.expire = val
+  expireYear.value = val
 }
 
 //信用卡背面3碼的輸入規則
@@ -133,11 +162,23 @@ const rules = {
   required: v => !!v || '此欄位為必填',
   cardNumber: (value) =>
           /^\d{16}$/.test(value.replace(/\s+/g, '')) || '請輸入 16 位有效信用卡號',
+  validMonth: (value) =>
+          /^(0[1-9]|1[0-2])$/.test(value) || '請輸入有效月份 (01-12)',
+  validYear: (value) => {
+          const currentYear = new Date().getFullYear() % 100; // 例如 2025 -> 25
+          const inputYear = parseInt(value, 10);
+          return (
+            /^\d{2}$/.test(value) &&
+            inputYear >= currentYear &&
+            inputYear <= currentYear + 10
+          ) || `請輸入有效年份 (${currentYear}-${currentYear + 10})`;
+        },
 }
 
 const submitForm = async () => {
   const validation = await formRef.value?.validate()
   if (validation.valid) {
+    form.expire = expireMonth.value + '/' + expireYear.value
     console.log('送出表單資料：', form)
     alert('表單已送出')
   }
