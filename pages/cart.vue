@@ -44,6 +44,15 @@
           <h2 class="mb-0 mx-2" style="color: red">{{ thousandth(cartStore.totalPrice) }}</h2>
           <p class="mb-0">元</p>
         </div>
+        <v-row justify="end">
+          <v-btn
+            color="primary"
+            class="mt-8"
+            to="/purchase"
+          >
+            前往結帳
+          </v-btn>
+        </v-row>
       </div>
       <div v-else class="d-flex flex-column custom-align-center">
         <img src="@/assets/images/cart.png" width="20%" height="auto" alt="">
