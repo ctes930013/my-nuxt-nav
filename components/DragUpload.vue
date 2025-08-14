@@ -6,9 +6,9 @@
     @dragleave="onDragLeave"
     @drop.prevent="onDrop"
   >
-    <p v-if="!preview">將圖片拖曳到這裡，或點擊選擇</p>
+    <p v-if="!preview" class="d-none d-md-block">將圖片拖曳到這裡，或點擊選擇</p>
     <input type="file" accept="image/*" hidden ref="fileInput" @change="onFileChange" />
-    <v-btn color="primary" class="mt-2" @click="fileInput.click()">選擇檔案</v-btn>
+    <v-btn color="primary" @click="fileInput.click()">選擇檔案</v-btn>
 
     <div v-if="preview" class="preview mt-3">
       <img :src="preview" alt="預覽圖片" />
