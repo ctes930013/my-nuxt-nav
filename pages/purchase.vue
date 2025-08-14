@@ -14,6 +14,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
+              id="cardNumber"
               v-model="form.number"
               label="信用卡號"
               required
@@ -65,6 +66,7 @@ const form = reactive({
 
 const valid = ref(false)
 const formRef = ref(null)
+var cardNumberLength = 0   //紀錄用戶當前輸入的卡號長度(含空格)
 
 //信用卡號的輸入規則
 function formatCardNumber() {
@@ -78,13 +80,35 @@ function formatCardNumber() {
 
     // 3. 每 4 位插入空格
     let formatted = ''
-    for (let i = 0; i < digits.length; i += 4) {
-        if (i > 0) formatted += ' ';
-        formatted += digits.slice(i, i + 4);
+    if (cardNumberLength <= form.number.length) {
+        //用戶正在輸入卡號才需要判斷是否加入空格
+        for (let i = 0; i < digits.length; i += 4) {
+            if (i > 0) formatted += ' ';
+            formatted += digits.slice(i, i + 4);
+        }
+        if (digits.length === 4 || digits.length === 8 || digits.length === 12) {
+            formatted += ' ';
+        }
+    } else {
+        //用戶正在刪除輸入的卡號
+        formatted = form.number
     }
+    const input = document.querySelector('#cardNumber');
+    var cursorPosition = input.selectionStart
 
     // 4. 更新 v-model
-    form.number = formatted.trim();
+    form.number = formatted;
+    cardNumberLength = form.number.length
+
+    // 5. 確保光標位置正確
+    nextTick(() => {
+        if (input) {
+            if (formatted.endsWith(' ')) {
+                cursorPosition += 1
+            }
+            input.setSelectionRange(cursorPosition, cursorPosition);
+        }
+    })
 }
 
 //信用卡期限的輸入規則
@@ -114,7 +138,7 @@ const rules = {
 const submitForm = async () => {
   const validation = await formRef.value?.validate()
   if (validation.valid) {
-    console.log('送出表單資料：', form.value)
+    console.log('送出表單資料：', form)
     alert('表單已送出')
   }
 }
