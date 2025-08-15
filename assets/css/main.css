@@ -54,3 +54,20 @@
   color: #FFFFFF !important;    /* 文字顏色 */
   background-color: red !important;   /* 背景顏色 */
 }
+
+/* 控制 Google 翻譯按鈕的邊框與背景 */
+#google_translate_element select {
+  background: #FFFFFF;
+  border: 2px solid #ccc;
+  font-size: 14px;
+  padding: 4px;
+}
+
+/* 隱藏 Google Translate 的工具列 */
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
