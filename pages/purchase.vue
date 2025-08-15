@@ -1,6 +1,33 @@
 <template>
   <div>
     <v-container class="py-8 px-md-15">
+      <div class="mb-8">
+        <h2 class="mb-4 text-center">商品總項</h2>
+        <v-row>
+          <v-col cols="12" v-for="(product, index) in cartStore.items">
+            <v-row class="g-3">
+              <v-col cols="8" class="pa-0">
+                <v-row align="center" class="ma-0">
+                  <img :src="product.image" height="100px" alt="桌機圖">
+                  <h3 class="fw-bold mx-4 mb-0">{{ product.name }}</h3>
+                </v-row>
+              </v-col>
+              <v-col cols="4" class="d-flex">
+                <v-row justify="end" align="center">
+                  <h4 class="mb-0">x</h4>
+                  <h3 class="fw-bold mb-0 mx-1">{{ thousandth(product.quantity) }}</h3>
+                </v-row>
+              </v-col>
+              <v-divider v-if="index < cartStore.items.length - 1" class="my-2" />
+            </v-row>
+          </v-col>
+        </v-row>
+        <v-row justify="end" align="center" class="mt-4">
+          <p class="fw-bold mb-0">總價:</p>
+          <h2 class="fw-bold mb-0 mx-2" style="color: red">{{ thousandth(cartStore.totalPrice) }}</h2>
+          <p class="fw-bold mb-0">元</p>
+        </v-row>
+      </div>
       <v-form @submit.prevent="submitForm" ref="formRef" v-model="valid">
         <h2 class="mb-4 text-center">信用卡付款</h2>
         <v-row>
@@ -74,6 +101,13 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useCartStore } from '@/stores/cart'
+import { thousandth } from '~/composables/digit'
+
+const cartStore = useCartStore()
+onMounted(() => {
+    cartStore.initializeCart() // 頁面載入時初始化購物車
+})
 
 const form = reactive({
   name: '',
