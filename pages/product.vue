@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="my-5 v-container-padding">
+    <v-container class="my-5 px-md-15">
       <v-row class="custom-margin-b-8">
         <v-col cols="12" md="6">
           <Swiper

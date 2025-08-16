@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="my-5 v-container-padding">
+    <v-container class="my-5 px-md-15">
       <div v-if="cartStore.items.length > 0">
         <v-row justify="end">
           <v-btn
