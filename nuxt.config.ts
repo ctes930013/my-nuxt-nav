@@ -30,5 +30,8 @@ export default defineNuxtConfig({
     },
     plugins: [vuetify()]
   },
-  modules: ['@pinia/nuxt']
+  modules: [
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+  ]
 })
