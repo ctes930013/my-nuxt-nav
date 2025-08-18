@@ -24,7 +24,9 @@
           <p class="mb-0">聯絡我們</p>
           <p class="mb-0">TEL: 03-3325898</p>
           <p class="mb-0">PHONE: 0935221039</p>
-          <div id="google_translate_element"></div>
+          <ClientOnly>
+            <div id="google_translate_element"></div>
+          </ClientOnly>
         </v-col>
       </v-row>
     </v-container>
