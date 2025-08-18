@@ -82,6 +82,15 @@ const formRef = ref(null)
 var formData = new FormData()
 var fileImg = ref(File)
 
+const userStore = useUserStore()
+onMounted(() => {
+  if (!userStore.isLoggedIn) {
+    navigateTo({
+      path: '/signin',
+    })
+  }
+})
+
 const rules = {
   required: v => !!v || '此欄位為必填',
   email: v =>
