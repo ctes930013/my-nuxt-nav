@@ -1,7 +1,14 @@
 <template>
   <div>
     <v-app>
-      <v-app-bar app color="primary" dark>
+      <v-app-bar 
+        app 
+        color="primary" 
+        dark
+        ref="appBar"
+        :style="{ transform: isAppBarVisible ? 'translateY(0)' : 'translateY(-100%)' }"
+        style="transition: transform 0.3s ease-in-out;"
+      >
         <v-toolbar-title>
           <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
         </v-toolbar-title>
@@ -80,11 +87,55 @@ import { useUserStore } from '@/stores/user'
 import { useSweetAlert } from '~/composables/useSweetAlert'
 
 const drawer = ref(false)  //漢堡包狀態
-const menu = ref(false); // 選單狀態
+const menu = ref(false)   // 選單狀態
+const isAppBarVisible = ref(true)    //app bar是否顯示
+const appBar = ref(null)    // Ref for v-app-bar
+const appBarHeight = ref(64)    //紀錄app abr高度
+var lastScrollPosition = 0
 
 const userStore = useUserStore()
 
 const { isMobile } = useIsMobile()
+
+//取得app bar高度
+const updateAppBarHeight = () => {
+  if (appBar.value) {
+    appBarHeight.value = appBar.value.$el.offsetHeight || 64;
+  }
+};
+
+onMounted(() => {
+  updateAppBarHeight()
+  // Add scroll event listener when component is mounted
+  window.addEventListener('scroll', handleScroll)
+})
+
+onBeforeUnmount(() => {
+  // Remove scroll event listener to prevent memory leaks
+  window.removeEventListener('scroll', handleScroll)
+})
+
+function handleScroll() {
+  // Get current scroll position
+  const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+
+  // Ignore if scrolling to the top of the page
+  if (currentScrollPosition < 0) {
+    return
+  }
+
+  // Determine scroll direction
+  if (currentScrollPosition > lastScrollPosition && currentScrollPosition > appBarHeight.value) {
+    // Scrolling down - hide app bar
+    isAppBarVisible.value = false
+  } else {
+    // Scrolling up - show app bar
+    isAppBarVisible.value = true
+  }
+
+  // Update last scroll position
+  lastScrollPosition = currentScrollPosition
+}
 
 //檢查要將用戶導去哪個頁面
 function checkUserPage() {
