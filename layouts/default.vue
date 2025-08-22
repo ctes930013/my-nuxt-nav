@@ -25,7 +25,7 @@
             </template>
             <v-list>
               <!-- 商品的二級選單 -->
-              <v-menu location="end" :close-on-content-click="false" open-on-hover>
+              <v-menu location="end" open-on-hover open-on-click>
                 <template v-slot:activator="{ props }">
                   <v-list-item v-bind="props">
                     <v-list-item-title>類別</v-list-item-title>
