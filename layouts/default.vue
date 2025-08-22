@@ -99,7 +99,7 @@
           <!-- 商品的一級選單 -->
           <v-expansion-panels>
             <v-expansion-panel elevation="0">
-              <v-expansion-panel-title>
+              <v-expansion-panel-title class="pl-4">
                 商品
               </v-expansion-panel-title>
               <!-- 商品的二級選單 -->
@@ -107,7 +107,7 @@
                 <v-list-item>
                   <v-expansion-panels>
                     <v-expansion-panel elevation="0">
-                      <v-expansion-panel-title>
+                      <v-expansion-panel-title class="pl-0">
                         <v-list-item-title>類別</v-list-item-title>
                       </v-expansion-panel-title>
                       <!-- 商品的二級選單 -->
