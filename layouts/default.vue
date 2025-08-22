@@ -18,6 +18,36 @@
         <!-- 電腦板的選單 -->
         <div class="d-none d-sm-flex">
           <v-btn text to="/">首頁</v-btn>
+          <!-- 商品的一級選單 -->
+          <v-menu v-model="productMenu" :close-on-content-click="false" open-on-hover open-on-click>
+            <template v-slot:activator="{ props }">
+              <v-btn text v-bind="props">商品</v-btn>
+            </template>
+            <v-list>
+              <!-- 商品的二級選單 -->
+              <v-menu location="end" :close-on-content-click="false" open-on-hover>
+                <template v-slot:activator="{ props }">
+                  <v-list-item v-bind="props">
+                    <v-list-item-title>類別</v-list-item-title>
+                  </v-list-item>
+                </template>
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>夏天系列</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>多水</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>無子</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <v-list-item>
+                <v-list-item-title>熱門產品</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
           <v-btn text to="/about">關於我們</v-btn>
           <v-btn text to="/contact">聯絡我們</v-btn>
           <v-btn text to="/cart">購物車</v-btn>
@@ -88,6 +118,7 @@ import { useSweetAlert } from '~/composables/useSweetAlert'
 
 const drawer = ref(false)  //漢堡包狀態
 const menu = ref(false)   // 選單狀態
+const productMenu = ref(false)    // 商品選單狀態
 const isAppBarVisible = ref(true)    //app bar是否顯示
 const appBar = ref(null)    // Ref for v-app-bar
 const appBarHeight = ref(64)    //紀錄app abr高度
