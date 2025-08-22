@@ -96,6 +96,41 @@
       >
         <v-list>
           <v-list-item to="/">首頁</v-list-item>
+          <!-- 商品的一級選單 -->
+          <v-expansion-panels>
+            <v-expansion-panel elevation="0">
+              <v-expansion-panel-title>
+                商品
+              </v-expansion-panel-title>
+              <!-- 商品的二級選單 -->
+              <v-expansion-panel-text>
+                <v-list-item>
+                  <v-expansion-panels>
+                    <v-expansion-panel elevation="0">
+                      <v-expansion-panel-title>
+                        <v-list-item-title>類別</v-list-item-title>
+                      </v-expansion-panel-title>
+                      <!-- 商品的二級選單 -->
+                      <v-expansion-panel-text>
+                        <v-list-item>
+                          <v-list-item-title>夏天系列</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item>
+                          <v-list-item-title>多水</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item>
+                          <v-list-item-title>無子</v-list-item-title>
+                        </v-list-item>
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-list-item>
+                <v-list-item>
+                  熱門產品
+                </v-list-item>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
           <v-list-item to="/about">關於我們</v-list-item>
           <v-list-item to="/contact">聯絡我們</v-list-item>
           <v-list-item to="/cart">購物車</v-list-item>
