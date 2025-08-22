@@ -68,6 +68,11 @@
   display: none !important;
 }
 
+/* 覆寫 Vuetify expansion-panel 二級選單展開範圍 預設的 padding */
+.v-expansion-panel-text__wrapper {
+  padding: 0px 0px 0px 6px !important;
+}
+
 body {
   top: 0px !important;
 }
