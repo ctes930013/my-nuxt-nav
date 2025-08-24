@@ -9,14 +9,14 @@
         :style="{ transform: isAppBarVisible ? 'translateY(0)' : 'translateY(-100%)' }"
         style="transition: transform 0.3s ease-in-out;"
       >
-        <v-toolbar-title>
+        <v-toolbar-title class="shrink">
           <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
         <!-- 電腦板的選單 -->
-        <div class="d-none d-sm-flex">
+        <div class="d-none d-sm-flex text-center">
           <v-btn text to="/">首頁</v-btn>
           <!-- 商品的一級選單 -->
           <v-menu v-model="productMenu" :close-on-content-click="false" open-on-hover open-on-click>
@@ -52,6 +52,8 @@
           <v-btn text to="/contact">聯絡我們</v-btn>
           <v-btn text to="/cart">購物車</v-btn>
         </div>
+
+        <v-spacer></v-spacer>
 
         <!-- 會員中心 -->
         <!-- 已登入就用懸浮選單 -->
@@ -234,5 +236,9 @@ function logout() {
 .nav-bar-icon {
   --v-btn-size: 24px !important;
   border-radius: 0%;
+}
+/* 讓頂部導航的logo不要佔滿 */
+.shrink {
+  flex: 0 0 auto !important;   
 }
 </style>
