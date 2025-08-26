@@ -42,7 +42,10 @@ export const productList: Product[] = [
         banner: [
             "https://youli-fruits.com/wp-content/uploads/2021/07/%E5%8F%B0%E8%BE%B21%E8%99%9F.jpg",
             "https://youli-fruits.com/wp-content/uploads/2021/08/%E5%A4%8F%E9%9B%AA%E8%8A%92%E6%9E%9C.jpg",
-            "https://youli-fruits.com/wp-content/uploads/2021/08/%E8%A5%BF%E6%96%BD%E8%8A%92%E6%9E%9C%E6%8B%B7%E8%B2%9D.jpg"
+            "https://youli-fruits.com/wp-content/uploads/2021/08/%E8%A5%BF%E6%96%BD%E8%8A%92%E6%9E%9C%E6%8B%B7%E8%B2%9D.jpg",
+            "https://youli-fruits.com/wp-content/uploads/2021/08/%E6%84%9B%E6%96%87%E8%8A%92%E6%9E%9C.jpg",
+            "https://youli-fruits.com/wp-content/uploads/2021/08/%E9%87%91%E7%85%8C%E8%8A%92%E6%9E%9C.jpg",
+            "https://youli-fruits.com/wp-content/uploads/2021/08/%E9%BB%91%E9%A6%99%E8%8A%92%E6%9E%9C.jpg"
         ],
         name: "芒果",
         price: 80,

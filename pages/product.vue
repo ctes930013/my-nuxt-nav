@@ -19,16 +19,28 @@
               <div class="swiper-pagination-text">{{ currentSlide + 1 }} / {{ productData?.banner.length }}</div>
             </Swiper>
             <!-- 圖片選擇區域（支援水平滾動） -->
-            <div class="thumbnail-container mt-4">
-              <div
-                v-for="(image, index) in productData?.banner"
-                :key="index"
-                class="thumbnail"
-                :class="{ 'selected': currentSlide === index }"
-                @click="selectThumbnail(index)"
+            <div class="thumbnail-wrapper mt-4">
+              <v-icon
+                class="scroll-arrow left-arrow"
+                @click="scrollThumbnail('left')"
+                >mdi-chevron-left</v-icon
               >
-                <img :src="image" alt="Thumbnail" class="thumbnail-image" />
+              <div class="thumbnail-container" ref="thumbnailContainer">
+                <div
+                  v-for="(image, index) in productData?.banner"
+                  :key="index"
+                  class="thumbnail"
+                  :class="{ 'selected': currentSlide === index }"
+                  @click="selectThumbnail(index)"
+                >
+                  <img :src="image" alt="Thumbnail" class="thumbnail-image" />
+                </div>
               </div>
+              <v-icon
+                class="scroll-arrow right-arrow"
+                @click="scrollThumbnail('right')"
+                >mdi-chevron-right</v-icon
+              >
             </div>
           </div>
         </v-col>
@@ -81,6 +93,7 @@ var relativeProductList = ref([] as Product[])
 
 const currentSlide = ref(0)    //紀錄當前banner輪播位置
 const swiperInstance = ref<SwiperType | null>(null)
+const thumbnailContainer = ref<HTMLElement | null>(null)
 
 //實例化swiper
 const onSwiper = (swiper: SwiperType) => {
@@ -97,6 +110,18 @@ const selectThumbnail = (index: number) => {
   currentSlide.value = index;
   if (swiperInstance.value) {
     swiperInstance.value.slideToLoop(index)
+  }
+};
+
+//水平滾動點選圖片選擇區域
+const scrollThumbnail = (direction: 'left' | 'right') => {
+  if (!thumbnailContainer.value) return;
+  const container = thumbnailContainer.value;
+  const scrollAmount = 200;    // 每次滾動的像素數，可調整
+  if (direction === 'left') {
+    container.scrollLeft -= scrollAmount;
+  } else {
+    container.scrollLeft += scrollAmount;
   }
 };
 
@@ -160,6 +185,12 @@ function addCart(product: Product) {
   margin: 0 auto;
   position: relative;
 }
+@media (min-width: 768px) {
+  .swiper-container {
+    width: 60%; /* 桌面板寬度 */
+  }
+}
+
 .swiper-pagination-text {
   position: absolute;
   bottom: 10px;
@@ -170,11 +201,19 @@ function addCart(product: Product) {
   border-radius: 5px;
   z-index: 10;    /* 確保文字顯示在圖片上層 */
 }
+
+.thumbnail-wrapper {
+  position: relative;    /* 為箭頭提供定位參考 */
+  width: 100%;     /* 確保包裹整個容器 */
+  overflow: hidden;    /* 防止內容溢出影響布局 */
+}
+
 /* 水平滾動的圖片選擇區域 */
 .thumbnail-container {
   overflow-x: auto;     /* 啟用水平滾動 */
   white-space: nowrap;     /* 防止換行 */
   padding: 10px 0;      /* 增加上下 padding */
+  position: relative;
   -webkit-overflow-scrolling: touch;     /* 提升 iOS 滾動體驗 */
 }
 
@@ -196,5 +235,33 @@ function addCart(product: Product) {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* 圖片選擇區域的箭頭 */
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  padding: 4px;
+}
+.left-arrow {
+  left: 0;
+}
+.right-arrow {
+  right: 0;
+}
+
+/* 隱藏滾動條 */
+.thumbnail-container::-webkit-scrollbar {
+  display: none;     /* 隱藏 Chrome/Safari 滾動條 */
+}
+.thumbnail-container {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;    /* Firefox */
 }
 </style>
