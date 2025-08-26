@@ -3,16 +3,34 @@
     <v-container class="my-5 px-md-15">
       <v-row class="custom-margin-b-8">
         <v-col cols="12" md="6">
-          <Swiper
-            :slides-per-view="1"
-            :loop="true"
-            :autoplay="{ delay: 3000 }"
-            :pagination="pagination"
-            >
-            <SwiperSlide v-for="(banner, i) in productData?.banner" :key="i">
-              <v-img :src="banner" cover />
-            </SwiperSlide>
-          </Swiper>
+          <!-- banner輪播圖區域 -->
+          <div class="swiper-container">
+            <Swiper
+              style="height: 80%;"
+              :slides-per-view="1"
+              :loop="true"
+              :autoplay="{ delay: 3000 }"
+              @swiper="onSwiper"
+              @slide-change="onSlideChange"
+              >
+              <SwiperSlide v-for="(banner, i) in productData?.banner" :key="i">
+                <v-img :src="banner" contain />
+              </SwiperSlide>
+              <div class="swiper-pagination-text">{{ currentSlide + 1 }} / {{ productData?.banner.length }}</div>
+            </Swiper>
+            <!-- 圖片選擇區域（支援水平滾動） -->
+            <div class="thumbnail-container mt-4">
+              <div
+                v-for="(image, index) in productData?.banner"
+                :key="index"
+                class="thumbnail"
+                :class="{ 'selected': currentSlide === index }"
+                @click="selectThumbnail(index)"
+              >
+                <img :src="image" alt="Thumbnail" class="thumbnail-image" />
+              </div>
+            </div>
+          </div>
         </v-col>
         <v-col cols="12" md="6" class="d-flex custom-justify-center custom-align-center mt-4 mt-md-0">
           <div class="d-flex flex-column">
@@ -54,14 +72,33 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import SwiperCore from 'swiper'
 import { Autoplay, Pagination } from 'swiper/modules'
+import type { Swiper as SwiperType } from 'swiper/types'
 
 SwiperCore.use([Autoplay, Pagination])
-const pagination = {
-    clickable: true
-}
 
 var productData = ref<Product>()
 var relativeProductList = ref([] as Product[])
+
+const currentSlide = ref(0)    //紀錄當前banner輪播位置
+const swiperInstance = ref<SwiperType | null>(null)
+
+//實例化swiper
+const onSwiper = (swiper: SwiperType) => {
+  swiperInstance.value = swiper
+};
+
+//監聽banner輪播改變時候
+const onSlideChange = (swiper: { realIndex: number }) => {
+  currentSlide.value = swiper.realIndex
+};
+
+//點選圖片選擇區域某張圖片
+const selectThumbnail = (index: number) => {
+  currentSlide.value = index;
+  if (swiperInstance.value) {
+    swiperInstance.value.slideToLoop(index)
+  }
+};
 
 const route = useRoute()
 
@@ -116,3 +153,48 @@ function addCart(product: Product) {
   })
 }
 </script>
+
+<style scoped>
+.swiper-container {
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+.swiper-pagination-text {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 10;    /* 確保文字顯示在圖片上層 */
+}
+/* 水平滾動的圖片選擇區域 */
+.thumbnail-container {
+  overflow-x: auto;     /* 啟用水平滾動 */
+  white-space: nowrap;     /* 防止換行 */
+  padding: 10px 0;      /* 增加上下 padding */
+  -webkit-overflow-scrolling: touch;     /* 提升 iOS 滾動體驗 */
+}
+
+.thumbnail {
+  display: inline-block; /* 確保水平排列 */
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  vertical-align: top; /* 對齊頂部 */
+  margin-right: 10px; /* 縮略圖之間的間距 */
+}
+
+.thumbnail.selected {
+  border-color: #1976d2;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+</style>
