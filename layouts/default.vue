@@ -31,7 +31,7 @@
                     <v-list-item-title>類別</v-list-item-title>
                   </v-list-item>
                 </template>
-                <v-list>
+                <v-list style="max-width: 400px;">
                   <v-list-item>
                     <v-list-item-title>夏天系列</v-list-item-title>
                   </v-list-item>
@@ -240,5 +240,10 @@ function logout() {
 /* 讓頂部導航的logo不要佔滿 */
 .shrink {
   flex: 0 0 auto !important;   
+}
+/* 支援選單文字換行 */
+.v-list-item-title {
+  white-space: normal !important;
+  word-break: break-word;
 }
 </style>
