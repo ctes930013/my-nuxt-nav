@@ -9,10 +9,16 @@
           />
         </v-col>
         <v-col cols="12" md="6" class="d-flex custom-justify-center custom-align-center mt-4 mt-md-0">
-          <div class="d-flex flex-column">
+          <v-col>
             <h2 class="mb-4 fw-bold text-center">{{ productData?.name }}</h2>
             <p class="mb-2 text-center">{{ productData?.description }}</p>
             <p class="mb-10 text-center">營養又可口</p>
+            <p class="text-center fw-bold">限時拍賣:</p>
+            <div class="d-flex justify-center mb-8">
+              <LimitDownCounter 
+                :deadline=1756281840
+              />
+            </div>
             <v-btn
               color="primary"
               class="custom-mx-auto"
@@ -20,7 +26,7 @@
             >
               加入購物車
             </v-btn>
-          </div>
+          </v-col>
         </v-col>
       </v-row>
       <div class="container my-4">
@@ -44,6 +50,7 @@ import { useCartStore } from '@/stores/cart'
 import type { Product } from '~/types/product'
 import { productList } from '~/datas/products'
 import ProductBanner from '~/components/ProductBanner.vue'
+import LimitDownCounter from '~/components/LimitDownCounter.vue'
 
 var productData = ref<Product>()
 var relativeProductList = ref([] as Product[])
