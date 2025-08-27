@@ -25,17 +25,21 @@
                 @click="scrollThumbnail('left')"
                 >mdi-chevron-left</v-icon
               >
-              <div class="thumbnail-container" ref="thumbnailContainer">
-                <div
+              <v-list 
+                class="thumbnail-container"
+                ref="thumbnailContainer"
+                dense
+              >
+                <v-list-item
                   v-for="(image, index) in productData?.banner"
                   :key="index"
-                  class="thumbnail"
+                  class="px-0"
                   :class="{ 'selected': currentSlide === index }"
                   @click="selectThumbnail(index)"
                 >
                   <img :src="image" alt="Thumbnail" class="thumbnail-image" />
-                </div>
-              </div>
+                </v-list-item>
+              </v-list>
               <v-icon
                 class="scroll-arrow right-arrow"
                 @click="scrollThumbnail('right')"
@@ -85,6 +89,7 @@ import 'swiper/css/pagination'
 import SwiperCore from 'swiper'
 import { Autoplay, Pagination } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper/types'
+import { VList } from 'vuetify/components'
 
 SwiperCore.use([Autoplay, Pagination])
 
@@ -93,7 +98,7 @@ var relativeProductList = ref([] as Product[])
 
 const currentSlide = ref(0)    //紀錄當前banner輪播位置
 const swiperInstance = ref<SwiperType | null>(null)
-const thumbnailContainer = ref<HTMLElement | null>(null)
+const thumbnailContainer = ref<InstanceType<typeof VList> | null>(null)
 
 //實例化swiper
 const onSwiper = (swiper: SwiperType) => {
@@ -116,14 +121,36 @@ const selectThumbnail = (index: number) => {
 //水平滾動點選圖片選擇區域
 const scrollThumbnail = (direction: 'left' | 'right') => {
   if (!thumbnailContainer.value) return;
-  const container = thumbnailContainer.value;
-  const scrollAmount = 200;    // 每次滾動的像素數，可調整
-  if (direction === 'left') {
-    container.scrollLeft -= scrollAmount;
-  } else {
-    container.scrollLeft += scrollAmount;
+  const container = thumbnailContainer.value.$el;
+  const scrollAmount = 200;
+  const maxScroll = container.scrollWidth - container.clientWidth;
+  if (direction === 'left' && container.scrollLeft > 0) {
+    container.scrollTo({
+      left: Math.max(0, container.scrollLeft - scrollAmount),
+      behavior: 'smooth',
+    });
+  } else if (direction === 'right' && container.scrollLeft < maxScroll) {
+    container.scrollTo({
+      left: Math.min(maxScroll, container.scrollLeft + scrollAmount),
+      behavior: 'smooth',
+    });
   }
 };
+
+//監聽當前banner輪播位置自動滾動到對應縮略圖
+watch(currentSlide, async (newIndex) => {
+  if (!thumbnailContainer.value) return;
+  await nextTick();
+  const container = thumbnailContainer.value;
+  const items = container.$el.getElementsByClassName('v-list-item');
+  if (items[newIndex]) {
+    items[newIndex].scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',     // 對齊到最近邊緣
+      inline: 'end',     // 水平對齊到結束位置
+    });
+  }
+});
 
 const route = useRoute()
 
@@ -217,18 +244,16 @@ function addCart(product: Product) {
   -webkit-overflow-scrolling: touch;     /* 提升 iOS 滾動體驗 */
 }
 
-.thumbnail {
-  display: inline-block; /* 確保水平排列 */
+.v-list-item {
+  display: inline-block !important; /* 確保水平排列 */
   width: 80px;
   height: 80px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  vertical-align: top; /* 對齊頂部 */
-  margin-right: 10px; /* 縮略圖之間的間距 */
+  padding: 0;
+  margin-right: 10px;
 }
 
-.thumbnail.selected {
-  border-color: #1976d2;
+.selected .thumbnail-image {
+  border: 2px solid #1976d2;
 }
 
 .thumbnail-image {
