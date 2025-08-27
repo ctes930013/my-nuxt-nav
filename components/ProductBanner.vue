@@ -10,7 +10,7 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, i) in props?.banner" :key="i">
-        <v-img :src="banner" contain />
+        <v-img :src="banner" @click="clickBanner(i)" contain />
       </SwiperSlide>
       <div class="swiper-pagination-text">{{ currentSlide + 1 }} / {{ props?.banner.length }}</div>
     </Swiper>
@@ -111,12 +111,19 @@ watch(currentSlide, async (newIndex) => {
   }
 });
 
+//banner點擊事件
+function clickBanner(index: number) {
+    emit('bannerClick', index)
+}
+
 const props = defineProps({
   banner: {
     type: Object as () => string[],
     required: true
   },
 });
+
+const emit = defineEmits(['bannerClick']);
 </script>
 
 <style scoped>

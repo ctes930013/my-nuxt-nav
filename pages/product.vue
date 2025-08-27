@@ -4,6 +4,7 @@
       <v-row class="custom-margin-b-8">
         <v-col cols="12" md="6">
           <ProductBanner
+            @banner-click="bannerClick"
             :banner="productData?.banner ?? []"
           />
         </v-col>
@@ -83,6 +84,11 @@ function productClick(productId: number) {
     path: '/product',
     query: { id: productId }
   })
+}
+
+//偵測商品banner點擊事件
+function bannerClick(index: number) {
+  console.log(productData?.value?.banner[index])
 }
 
 //偵測購物車點擊事件
