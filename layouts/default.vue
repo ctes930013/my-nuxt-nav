@@ -24,7 +24,7 @@
             <v-spacer></v-spacer>
 
             <!-- 電腦板的選單 -->
-            <div class="d-none d-sm-flex text-center">
+            <div class="d-none d-md-flex text-center">
               <v-btn text to="/">首頁</v-btn>
               <!-- 商品的一級選單 -->
               <v-menu v-model="productMenu" :close-on-content-click="false" open-on-hover open-on-click>
@@ -93,7 +93,7 @@
             </ClientOnly>
 
             <!-- 手機板的漢堡選單 -->
-            <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-sm-none">
+            <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-block d-md-none">
               <i class="bi bi-list"></i>
             </v-app-bar-nav-icon>
           </div>
@@ -104,7 +104,7 @@
         v-model="drawer"
         temporary
         location="right"
-        class="d-sm-none"
+        class="d-block d-md-none"
         :style="{ 'top': appBarHeight ? `${appBarHeight}px` : '92px' }"
       >
         <v-list>
@@ -188,11 +188,15 @@ const updateAppBarHeight = () => {
 
 onMounted(() => {
   updateAppBarHeight()
+  const orientationMedia = window.matchMedia('(orientation: portrait)')
+  orientationMedia.addEventListener('change', updateAppBarHeight)
   // Add scroll event listener when component is mounted
   window.addEventListener('scroll', handleScroll)
 })
 
 onBeforeUnmount(() => {
+  const orientationMedia = window.matchMedia('(orientation: portrait)')
+  orientationMedia.removeEventListener('change', updateAppBarHeight)
   // Remove scroll event listener to prevent memory leaks
   window.removeEventListener('scroll', handleScroll)
 })
