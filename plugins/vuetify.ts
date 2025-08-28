@@ -21,7 +21,18 @@ export default defineNuxtPlugin((nuxtApp) => {
         ripple: false,     // 🚫 關閉所有 ripple 效果
       }
     },
-    ssr: true
+    ssr: true,
+    theme: {
+      defaultTheme: 'myCustomTheme',
+      themes: {
+        myCustomTheme: {
+          dark: false,
+          colors: {
+            primary: '#13678a',
+          }
+        }
+      }
+    },
   })
 
   nuxtApp.vueApp.use(vuetify)

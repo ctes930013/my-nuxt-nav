@@ -10,6 +10,12 @@
   margin-top: auto;
 }
 
+/* 由於引入 Bootstrap 導致vuetify本身顏色吃不到，故調高優先權 */
+.bg-primary {
+  background-color: rgb(var(--v-theme-primary)) !important;
+  color: rgb(var(--v-theme-on-primary)) !important;
+}
+
 .custom-margin-b-8 {
   margin-bottom: 8rem !important;
 }
