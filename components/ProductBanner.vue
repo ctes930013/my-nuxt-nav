@@ -97,19 +97,19 @@ const scrollThumbnail = (direction: 'left' | 'right') => {
 };
 
 //監聽當前banner輪播位置自動滾動到對應縮略圖
-watch(currentSlide, async (newIndex) => {
-  if (!thumbnailContainer.value) return;
-  await nextTick();
-  const container = thumbnailContainer.value;
-  const items = container.$el.getElementsByClassName('v-list-item');
-  if (items[newIndex]) {
-    items[newIndex].scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',     // 對齊到最近邊緣
-      inline: 'end',     // 水平對齊到結束位置
-    });
-  }
-});
+// watch(currentSlide, async (newIndex) => {
+//   if (!thumbnailContainer.value) return;
+//   await nextTick();
+//   const container = thumbnailContainer.value;
+//   const items = container.$el.getElementsByClassName('v-list-item');
+//   if (items[newIndex]) {
+//     items[newIndex].scrollIntoView({
+//       behavior: 'smooth',
+//       block: 'nearest',     // 對齊到最近邊緣
+//       inline: 'end',     // 水平對齊到結束位置
+//     });
+//   }
+// });
 
 //banner點擊事件
 function clickBanner(index: number) {
