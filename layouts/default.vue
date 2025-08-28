@@ -105,7 +105,10 @@
         temporary
         location="right"
         class="d-block d-md-none"
-        :style="{ 'top': appBarHeight ? `${appBarHeight}px` : '92px' }"
+        :style="{ 
+          'top': appBarHeight ? `${appBarHeight}px` : '92px', 
+          'height': appBarHeight ? `calc(100% - ${appBarHeight}px)` : 'calc(100% - 92px)' 
+        }"
       >
         <v-list>
           <v-list-item to="/">首頁</v-list-item>
