@@ -82,3 +82,9 @@
 body {
   top: 0px !important;
 }
+
+/* 強制改變app bar高度 */
+.v-app-bar .v-toolbar__content {
+  height: auto !important;
+  padding: 0 !important;
+}
