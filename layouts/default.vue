@@ -3,15 +3,16 @@
     <v-app>
       <v-app-bar 
         app 
-        color="primary" 
+        color="white" 
         dark
+        elevation="3"
         ref="appBar"
         :style="{ transform: isAppBarVisible ? 'translateY(0)' : 'translateY(-100%)' }"
         style="transition: transform 0.3s ease-in-out;"
       >
         <div class="d-flex flex-column d-flex-full-width">
           <!-- 上層頂部橫幅 -->
-          <div class="text-center py-1">
+          <div class="bulletin-header text-center py-1">
             <p class="text-white" style="margin: 0;">歡迎來到線上水果行~~~</p>
           </div>
 
@@ -305,5 +306,9 @@ function logout() {
 .menu-align {
   align-self: flex-end !important;
   margin-bottom: 0px;
+}
+/* 頂部的公告欄 */
+.bulletin-header {
+  background-color: rgb(var(--v-theme-primary));   /* 使用主題的 primary 顏色 */
 }
 </style>
