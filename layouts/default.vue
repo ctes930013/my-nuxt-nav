@@ -302,6 +302,10 @@ function logout() {
 .search-text-input::placeholder {
   color: gray;
 }
+/* 搜尋輸入框focus後的邊框 */
+input:focus { 
+  outline: none; 
+}
 /* 電腦版選單對齊方式 */
 .menu-align {
   align-self: flex-end !important;
