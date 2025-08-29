@@ -9,14 +9,14 @@
         :style="{ transform: isAppBarVisible ? 'translateY(0)' : 'translateY(-100%)' }"
         style="transition: transform 0.3s ease-in-out;"
       >
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column d-flex-full-width">
           <!-- 上層頂部橫幅 -->
-          <div class="text-center py-2">
+          <div class="text-center py-1">
             <p class="text-white" style="margin: 0;">歡迎來到線上水果行~~~</p>
           </div>
 
           <!-- 下層選單列 -->
-          <div class="d-flex align-center px-4 py-2">
+          <div class="d-flex align-center px-4 py-1 d-flex-full-width">
             <v-toolbar-title class="shrink">
               <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
             </v-toolbar-title>
@@ -24,7 +24,7 @@
             <v-spacer></v-spacer>
 
             <!-- 電腦板的選單 -->
-            <div class="d-none d-md-flex text-center">
+            <v-row class="d-none d-md-flex menu-align" justify="center">
               <v-btn text to="/">首頁</v-btn>
               <!-- 商品的一級選單 -->
               <v-menu v-model="productMenu" :close-on-content-click="false" open-on-hover open-on-click>
@@ -59,38 +59,56 @@
               <v-btn text to="/about">關於我們</v-btn>
               <v-btn text to="/contact">聯絡我們</v-btn>
               <v-btn text to="/cart">購物車</v-btn>
-            </div>
+            </v-row>
 
             <v-spacer></v-spacer>
 
-            <!-- 會員中心 -->
-            <!-- 已登入就用懸浮選單 -->
-            <ClientOnly>
-              <div v-if="userStore.isLoggedIn">
-                <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
-                  <!-- 激活選單的按鈕 -->
-                  <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
+            <div class="d-flex flex-column align-center">
+              <div class="d-flex align-center">
+                <!-- 購物車 -->
+                <v-btn class="d-none d-md-flex" to="/cart">
+                  <i class="bi bi-cart"></i>
+                </v-btn>
+                <!-- 會員中心 -->
+                <!-- 已登入就用懸浮選單 -->
+                <ClientOnly>
+                  <div v-if="userStore.isLoggedIn">
+                    <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
+                      <!-- 激活選單的按鈕 -->
+                      <template v-slot:activator="{ props }">
+                        <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
+                          <i class="bi bi-person-circle"></i>
+                        </v-btn>
+                      </template>
+                      <v-list>
+                        <v-list-item to="/userinfo" @click="menu = false">
+                          <v-list-item-title>會員資料</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="logout">
+                          <v-list-item-title>登出</v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </div>
+                  <!-- 未登入就用一般按鈕 -->
+                  <div v-else>
+                    <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
                       <i class="bi bi-person-circle"></i>
                     </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item to="/userinfo" @click="menu = false">
-                      <v-list-item-title>會員資料</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="logout">
-                      <v-list-item-title>登出</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
+                  </div>
+                </ClientOnly>
               </div>
-              <!-- 未登入就用一般按鈕 -->
-              <div v-else>
-                <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
-                  <i class="bi bi-person-circle"></i>
-                </v-btn>
+              <!-- 下方搜尋欄 -->
+              <div class="d-none d-md-flex align-center search-input-bg">
+                <input
+                  id="search"
+                  placeholder="搜尋商品"
+                  type="text"
+                  class="mx-2 search-text-input"
+                />
+                <v-icon color="black">mdi-magnify</v-icon>
               </div>
-            </ClientOnly>
+            </div>
 
             <!-- 手機板的漢堡選單 -->
             <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-block d-md-none">
@@ -265,7 +283,27 @@ function logout() {
   word-break: break-word;
 }
 /* 確保app bar下層內容滿寬 */
-.d-flex {
+.d-flex-full-width {
   width: 100%;
+}
+/* 搜尋輸入框背景 */
+.search-input-bg {
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: white;
+}
+/* 自訂搜尋輸入框 */
+.search-text-input {
+  width: 90px;
+  color: black;
+}
+.search-text-input::placeholder {
+  color: gray;
+}
+/* 電腦版選單對齊方式 */
+.menu-align {
+  align-self: flex-end !important;
+  margin-bottom: 0px;
 }
 </style>
