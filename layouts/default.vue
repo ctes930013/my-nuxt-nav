@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- 上層頂部公告橫幅 -->
+    <Bulletin class="bulletin"/>
     <v-app>
       <v-app-bar 
         app 
@@ -11,10 +13,8 @@
         style="transition: transform 0.3s ease-in-out;"
       >
         <div class="d-flex flex-column d-flex-full-width">
-          <!-- 上層頂部橫幅 -->
-          <div class="bulletin-header text-center py-1">
-            <p class="text-white" style="margin: 0;">歡迎來到線上水果行~~~</p>
-          </div>
+          <!-- 上層頂部公告橫幅(做個假的) -->
+          <Bulletin style="visibility: hidden;" />
 
           <!-- 下層選單列 -->
           <div class="d-flex align-center px-4 py-1 d-flex-full-width">
@@ -307,8 +307,12 @@ function logout() {
   align-self: flex-end !important;
   margin-bottom: 0px;
 }
-/* 頂部的公告欄 */
-.bulletin-header {
-  background-color: rgb(var(--v-theme-primary));   /* 使用主題的 primary 顏色 */
+/* 最頂部公告佈局 */
+.bulletin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1500;
 }
 </style>
