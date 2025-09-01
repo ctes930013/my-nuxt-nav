@@ -14,105 +14,107 @@
 
         <!-- 下層選單列 -->
         <div class="d-flex align-center px-4 py-1 d-flex-full-width">
-        <v-toolbar-title class="shrink">
-          <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
-        </v-toolbar-title>
+          <v-toolbar-title class="shrink">
+            <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
+          </v-toolbar-title>
 
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
 
-        <!-- 電腦板的選單 -->
-        <v-row class="d-none d-md-flex menu-align" justify="center">
-          <v-btn text to="/">首頁</v-btn>
-          <!-- 商品的一級選單 -->
-          <v-menu v-model="productMenu" :close-on-content-click="false" open-on-hover open-on-click>
-            <template v-slot:activator="{ props }">
-              <v-btn text v-bind="props">商品</v-btn>
-            </template>
-            <v-list>
-              <!-- 商品的二級選單 -->
-              <v-menu location="end" open-on-hover open-on-click>
-                <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props">
-                  <v-list-item-title>類別</v-list-item-title>
-                  </v-list-item>
-                </template>
-                <v-list style="max-width: 400px;">
-                  <v-list-item>
-                    <v-list-item-title>夏天系列</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-title>多水</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-title>無子</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <v-list-item>
-                <v-list-item-title>熱門產品</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-btn text to="/about">關於我們</v-btn>
-          <v-btn text to="/contact">聯絡我們</v-btn>
-          <v-btn text to="/cart">購物車</v-btn>
-        </v-row>
+          <!-- 電腦板的選單 -->
+          <v-row class="d-none d-md-flex menu-align" justify="center">
+            <v-btn text to="/">首頁</v-btn>
+            <!-- 商品的一級選單 -->
+            <v-menu v-model="productMenu" :close-on-content-click="false" open-on-hover open-on-click>
+              <template v-slot:activator="{ props }">
+                <v-btn text v-bind="props">
+                  商品<v-icon>mdi-chevron-down</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <!-- 商品的二級選單 -->
+                <v-menu location="end" open-on-hover open-on-click>
+                  <template v-slot:activator="{ props }">
+                    <v-list-item v-bind="props">
+                    <v-list-item-title>類別</v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <v-list style="max-width: 400px;">
+                    <v-list-item>
+                      <v-list-item-title>夏天系列</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-title>多水</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-title>無子</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+                <v-list-item>
+                  <v-list-item-title>熱門產品</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <v-btn text to="/about">關於我們</v-btn>
+            <v-btn text to="/contact">聯絡我們</v-btn>
+            <v-btn text to="/cart">購物車</v-btn>
+          </v-row>
 
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
 
-        <div class="d-flex flex-column align-center">
+          <div class="d-flex flex-column align-center">
             <div class="d-flex align-center">
-            <!-- 購物車 -->
-            <v-btn class="d-none d-md-flex" to="/cart">
+              <!-- 購物車 -->
+              <v-btn class="d-none d-md-flex" to="/cart">
                 <i class="bi bi-cart"></i>
-            </v-btn>
-            <!-- 會員中心 -->
-            <!-- 已登入就用懸浮選單 -->
-            <ClientOnly>
+              </v-btn>
+              <!-- 會員中心 -->
+              <!-- 已登入就用懸浮選單 -->
+              <ClientOnly>
                 <div v-if="userStore.isLoggedIn">
-                <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
+                  <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
                     <!-- 激活選單的按鈕 -->
                     <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
+                      <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
                         <i class="bi bi-person-circle"></i>
-                    </v-btn>
+                      </v-btn>
                     </template>
                     <v-list>
-                    <v-list-item to="/userinfo" @click="menu = false">
+                      <v-list-item to="/userinfo" @click="menu = false">
                         <v-list-item-title>會員資料</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="logout">
+                      </v-list-item>
+                      <v-list-item @click="logout">
                         <v-list-item-title>登出</v-list-item-title>
-                    </v-list-item>
+                      </v-list-item>
                     </v-list>
-                </v-menu>
+                  </v-menu>
                 </div>
                 <!-- 未登入就用一般按鈕 -->
                 <div v-else>
-                <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
+                  <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
                     <i class="bi bi-person-circle"></i>
-                </v-btn>
+                  </v-btn>
                 </div>
-            </ClientOnly>
+              </ClientOnly>
             </div>
             <!-- 下方搜尋欄 -->
             <div class="d-none d-md-flex align-center search-input-bg">
-            <input
+              <input
                 id="search"
                 placeholder="搜尋商品"
                 type="text"
                 class="mx-2 search-text-input"
-            />
-            <v-icon color="black">mdi-magnify</v-icon>
+              />
+              <v-icon color="black">mdi-magnify</v-icon>
             </div>
-        </div>
+          </div>
 
-        <!-- 手機板的漢堡選單 -->
-        <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-block d-md-none">
+          <!-- 手機板的漢堡選單 -->
+          <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-block d-md-none">
             <i class="bi bi-list"></i>
-        </v-app-bar-nav-icon>
+          </v-app-bar-nav-icon>
         </div>
-    </div>
+      </div>
     </v-app-bar>
 
     <v-navigation-drawer
