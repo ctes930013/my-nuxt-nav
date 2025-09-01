@@ -16,7 +16,7 @@
             <p class="text-center fw-bold">限時拍賣:</p>
             <div class="d-flex justify-center mb-8">
               <LimitDownCounter 
-                :deadline=1756281840
+                :deadline=1756741073
               />
             </div>
             <v-btn
