@@ -1,5 +1,5 @@
 <template>
-  <v-footer app color="primary" class="text-muted pa-4 mt-auto">
+  <v-footer app color="primary" class="footer-bg text-muted pa-4 mt-auto">
     <v-container>
       <v-row>
         <v-col cols="12" md="4" class="mb-4">
@@ -36,5 +36,10 @@
 <style scoped>
 a:hover {
   color: blue;
+}
+/* 搜尋輸入框背景 */
+.footer-bg {
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
 }
 </style>
