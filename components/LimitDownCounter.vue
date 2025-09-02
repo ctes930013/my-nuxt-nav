@@ -81,11 +81,14 @@ onUnmounted(() => {
 
 <style scoped>
 .down-counter-time {
+  width: 40px;
+  text-align:center;
   font-size: 20px;
   color: white;
   background-color: black;
   border-radius: 10%;
-  padding: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .down-counter-time-desc {
   margin-left: 6px;
