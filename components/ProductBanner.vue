@@ -19,8 +19,7 @@
       <v-icon
         class="scroll-arrow left-arrow"
         @click="scrollThumbnail('left')"
-        >mdi-chevron-left</v-icon
-      >
+        >mdi-chevron-left</v-icon>
       <v-list 
         class="thumbnail-container"
         ref="thumbnailContainer"
@@ -41,12 +40,14 @@
         @click="scrollThumbnail('right')"
       >mdi-chevron-right</v-icon>
     </div>
-    <ImageDialog 
-      :image-list="props?.banner ?? []"
-      :index="selectedImageIndex"
-      :show="showDialog" 
-      @show="showDialog = $event" 
-    />
+    <div v-if="showDialog">
+      <ImageDialog 
+        :image-list="props?.banner ?? []"
+        :index="selectedImageIndex"
+        :show="showDialog" 
+        @show="showDialog = $event" 
+      />
+    </div>
   </div>
 </template>
 
