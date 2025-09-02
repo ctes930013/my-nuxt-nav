@@ -41,6 +41,12 @@
         @click="scrollThumbnail('right')"
       >mdi-chevron-right</v-icon>
     </div>
+    <ImageDialog 
+      :image-list="props?.banner ?? []"
+      :index="selectedImageIndex"
+      :show="showDialog" 
+      @show="showDialog = $event" 
+    />
   </div>
 </template>
 
@@ -58,6 +64,14 @@ SwiperCore.use([Autoplay, Pagination])
 const currentSlide = ref(0)    //紀錄當前banner輪播位置
 const swiperInstance = ref<SwiperType | null>(null)
 const thumbnailContainer = ref<InstanceType<typeof VList> | null>(null)
+const showDialog = ref(false)    //是否顯示圖片浮窗
+const selectedImageIndex = ref(0)    //目前點選的圖片index
+
+//開啟圖片浮窗
+const openImageDialog = (index: number) => {
+  selectedImageIndex.value = index
+  showDialog.value = true
+}
 
 //實例化swiper
 const onSwiper = (swiper: SwiperType) => {
@@ -113,7 +127,8 @@ const scrollThumbnail = (direction: 'left' | 'right') => {
 
 //banner點擊事件
 function clickBanner(index: number) {
-    emit('bannerClick', index)
+  openImageDialog(index)
+  emit('bannerClick', index)
 }
 
 const props = defineProps({
@@ -136,17 +151,6 @@ const emit = defineEmits(['bannerClick']);
   .swiper-container {
     width: 60%; /* 桌面板寬度 */
   }
-}
-
-.swiper-pagination-text {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 5px 10px;
-  border-radius: 5px;
-  z-index: 10;    /* 確保文字顯示在圖片上層 */
 }
 
 .thumbnail-wrapper {
