@@ -8,8 +8,19 @@
           @click="switchImage('left')"
         >mdi-chevron-left</v-icon>
         <v-card class="image">
-          <v-img :src="props?.imageList[currentIndex]" alt="Full Image" max-height="80vh" contain />
-          <div class="swiper-pagination-text">{{ currentIndex + 1 }} / {{ props?.imageList.length }}</div>
+          <Swiper
+            style="max-height: 80vh;"
+            :initial-slide="currentIndex"
+            :slides-per-view="1"
+            :loop="true"
+            @swiper="onSwiper"
+            @slide-change="onSlideChange"
+            >
+            <SwiperSlide v-for="(img, i) in props?.imageList" :key="i">
+              <v-img :src="img" contain />
+            </SwiperSlide>
+            <div class="swiper-pagination-text">{{ currentIndex + 1 }} / {{ props?.imageList.length }}</div>
+          </Swiper>
         </v-card>
         <v-icon
           class="scroll-arrow right-arrow"
@@ -21,6 +32,9 @@
 </template>
 
 <script setup lang="ts">
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import type { Swiper as SwiperType } from 'swiper/types'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -38,8 +52,19 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['show'])
+const swiperInstance = ref<SwiperType | null>(null)
 const dialog = ref(props.show)
 const currentIndex = ref(props.index)   //紀錄當前圖片所在位置
+
+//實例化swiper
+const onSwiper = (swiper: SwiperType) => {
+  swiperInstance.value = swiper
+};
+
+//監聽banner輪播改變時候
+const onSlideChange = (swiper: { realIndex: number }) => {
+  currentIndex.value = swiper.realIndex
+};
 
 const closeDialog = () => {
   dialog.value = false
@@ -48,10 +73,21 @@ const closeDialog = () => {
 
 //切換圖片
 const switchImage = (direction: 'left' | 'right') => {
-  if (direction === 'left' && currentIndex.value > 0) {
-    currentIndex.value--
-  } else if (direction === 'right' && currentIndex.value < props?.imageList.length - 1) {
-    currentIndex.value++
+  if (direction === 'left') {
+    if (currentIndex.value > 0) {
+        currentIndex.value--
+    } else {
+        currentIndex.value = props?.imageList.length - 1
+    }
+  } else if (direction === 'right') {
+    if (currentIndex.value < props?.imageList.length - 1) {
+        currentIndex.value++
+    } else {
+        currentIndex.value = 0
+    }
+  }
+  if (swiperInstance.value) {
+    swiperInstance.value.slideToLoop(currentIndex.value)
   }
 }
 
