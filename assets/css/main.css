@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
 .main {
   display: flex;
   flex-direction: column;

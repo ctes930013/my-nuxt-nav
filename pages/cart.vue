@@ -16,7 +16,7 @@
             <v-row class="g-3">
               <v-col cols="8" class="pa-0">
                 <v-row align="center" class="ma-0">
-                  <img :src="product.image" height="100px" alt="桌機圖">
+                  <img :src="product.image" style="height: 100px !important;" alt="桌機圖">
                   <h3 class="fw-bold mx-4 mb-0">{{ product.name }}</h3>
                 </v-row>
               </v-col>
