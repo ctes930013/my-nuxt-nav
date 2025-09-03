@@ -11,7 +11,7 @@
         style="height: 80%;"
         @select="onSlideChange"
       >
-        <v-img :src="item" contain />
+        <v-img :src="item" @click="clickBanner(item)" contain />
       </UCarousel>
       <div class="swiper-pagination-text">{{ currentSlide + 1 }} / {{ props?.banner.length }}</div>
     </div>
@@ -119,7 +119,8 @@ const scrollThumbnail = (direction: 'left' | 'right') => {
 // });
 
 //banner點擊事件
-function clickBanner(index: number) {
+function clickBanner(img: string) {
+  const index = props?.banner.findIndex(number => number == img)
   openImageDialog(index)
   emit('bannerClick', index)
 }

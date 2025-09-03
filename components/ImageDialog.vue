@@ -8,19 +8,18 @@
           @click="switchImage('left')"
         >mdi-chevron-left</v-icon>
         <v-card class="image">
-          <Swiper
+          <UCarousel
+            ref="carousel"
+            v-slot="{ item }"
+            loop
+            :startIndex="currentIndex"
+            :items="props?.imageList"
             style="max-height: 80vh;"
-            :initial-slide="currentIndex"
-            :slides-per-view="1"
-            :loop="true"
-            @swiper="onSwiper"
-            @slide-change="onSlideChange"
-            >
-            <SwiperSlide v-for="(img, i) in props?.imageList" :key="i">
-              <v-img :src="img" contain />
-            </SwiperSlide>
-            <div class="swiper-pagination-text">{{ currentIndex + 1 }} / {{ props?.imageList.length }}</div>
-          </Swiper>
+            @select="onSlideChange"
+          >
+            <v-img :src="item" contain />
+          </UCarousel>
+          <div class="swiper-pagination-text">{{ currentIndex + 1 }} / {{ props?.imageList.length }}</div>
         </v-card>
         <v-icon
           class="scroll-arrow right-arrow"
@@ -32,9 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
-import type { Swiper as SwiperType } from 'swiper/types'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -52,18 +48,13 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['show'])
-const swiperInstance = ref<SwiperType | null>(null)
+const carousel = useTemplateRef('carousel')
 const dialog = ref(props.show)
 const currentIndex = ref(props.index)   //紀錄當前圖片所在位置
 
-//實例化swiper
-const onSwiper = (swiper: SwiperType) => {
-  swiperInstance.value = swiper
-};
-
 //監聽banner輪播改變時候
-const onSlideChange = (swiper: { realIndex: number }) => {
-  currentIndex.value = swiper.realIndex
+const onSlideChange = (index: number) => {
+  currentIndex.value = index
 };
 
 const closeDialog = () => {
@@ -86,9 +77,7 @@ const switchImage = (direction: 'left' | 'right') => {
         currentIndex.value = 0
     }
   }
-  if (swiperInstance.value) {
-    swiperInstance.value.slideToLoop(currentIndex.value)
-  }
+  carousel.value?.emblaApi?.scrollTo(currentIndex.value)
 }
 
 watch(() => props.show, (newVal) => {
