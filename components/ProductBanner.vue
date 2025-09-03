@@ -1,19 +1,20 @@
 <template>
   <!-- banner輪播圖區域 -->
   <div class="swiper-container">
-    <Swiper
-      style="height: 80%;"
-      :slides-per-view="1"
-      :loop="true"
-      :autoplay="{ delay: 3000 }"
-      @swiper="onSwiper"
-      @slide-change="onSlideChange"
-    >
-      <SwiperSlide v-for="(banner, i) in props?.banner" :key="i">
-        <v-img :src="banner" @click="clickBanner(i)" contain />
-      </SwiperSlide>
+    <div style="position: relative;">
+      <UCarousel
+        ref="carousel"
+        v-slot="{ item }"
+        loop
+        :autoplay="autoplay"
+        :items="props?.banner"
+        style="height: 80%;"
+        @select="onSlideChange"
+      >
+        <v-img :src="item" contain />
+      </UCarousel>
       <div class="swiper-pagination-text">{{ currentSlide + 1 }} / {{ props?.banner.length }}</div>
-    </Swiper>
+    </div>
     <!-- 圖片選擇區域（支援水平滾動） -->
     <div class="thumbnail-wrapper mt-4">
       <v-icon
@@ -52,21 +53,19 @@
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import SwiperCore from 'swiper'
-import { Autoplay, Pagination } from 'swiper/modules'
-import type { Swiper as SwiperType } from 'swiper/types'
 import { VList } from 'vuetify/components'
 
-SwiperCore.use([Autoplay, Pagination])
-
+const carousel = useTemplateRef('carousel')
 const currentSlide = ref(0)    //紀錄當前banner輪播位置
-const swiperInstance = ref<SwiperType | null>(null)
 const thumbnailContainer = ref<InstanceType<typeof VList> | null>(null)
 const showDialog = ref(false)    //是否顯示圖片浮窗
 const selectedImageIndex = ref(0)    //目前點選的圖片index
+
+//配置輪播圖自動撥放
+const autoplay = {
+  delay: 3000,
+  stopOnInteraction: false
+}
 
 //開啟圖片浮窗
 const openImageDialog = (index: number) => {
@@ -74,22 +73,15 @@ const openImageDialog = (index: number) => {
   showDialog.value = true
 }
 
-//實例化swiper
-const onSwiper = (swiper: SwiperType) => {
-  swiperInstance.value = swiper
-};
-
 //監聽banner輪播改變時候
-const onSlideChange = (swiper: { realIndex: number }) => {
-  currentSlide.value = swiper.realIndex
+const onSlideChange = (index: number) => {
+  currentSlide.value = index
 };
 
 //點選圖片選擇區域某張圖片
 const selectThumbnail = (index: number) => {
-  currentSlide.value = index;
-  if (swiperInstance.value) {
-    swiperInstance.value.slideToLoop(index)
-  }
+  currentSlide.value = index
+  carousel.value?.emblaApi?.scrollTo(index)
 };
 
 //水平滾動點選圖片選擇區域
