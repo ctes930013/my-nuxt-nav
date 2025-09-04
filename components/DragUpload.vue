@@ -1,5 +1,39 @@
 <template>
-  <div
+  <UFileUpload
+    v-model="fileValue"
+    icon="i-lucide-image"
+    label="將圖片拖曳到這裡，或點擊選擇"
+    description="PNG, JPG"
+    layout="grid"
+    multiple
+    :interactive="false"
+  >
+    <template #actions="{ open  }">
+      <UButton
+        label="選擇圖片"
+        icon="i-lucide-upload"
+        color="neutral"
+        variant="outline"
+        @click="open ()"
+      />
+    </template>
+
+    <template #files-top="{ open , files }">
+      <div v-if="files?.length" class="mb-2 flex items-center justify-between">
+        <p class="font-bold">Files ({{ files?.length }})</p>
+
+        <UButton
+          icon="i-lucide-plus"
+          label="新增更多"
+          color="neutral"
+          variant="outline"
+          class="-my-2"
+          @click="open ()"
+        />
+      </div>
+    </template>
+  </UFileUpload>
+  <!-- <div
     class="drop-area"
     :class="{ 'is-over': isOver }"
     @dragover.prevent="onDragOver"
@@ -13,7 +47,7 @@
     <div v-if="preview" class="preview mt-3">
       <img :src="preview" alt="預覽圖片" />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup>

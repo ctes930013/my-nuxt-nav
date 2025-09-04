@@ -64,7 +64,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import DragUpload from '~/components/DragUpload.vue'
 
@@ -78,9 +78,9 @@ const form = ref({
 })
 
 const valid = ref(false)
-const formRef = ref(null)
+const formRef = ref<any>(null)
 var formData = new FormData()
-var fileImg = ref(File)
+var fileImg = ref<File[]>([])
 
 const userStore = useUserStore()
 onMounted(() => {
@@ -92,8 +92,8 @@ onMounted(() => {
 })
 
 const rules = {
-  required: v => !!v || '此欄位為必填',
-  email: v =>
+  required: (v: string) => !!v || '此欄位為必填',
+  email: (v: string) =>
     !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Email 格式錯誤'
 }
 
@@ -104,7 +104,9 @@ const submitForm = async () => {
     Object.entries(form.value).forEach(([key, value]) => {
       formData.append(key, value)
     });
-    formData.append('image', fileImg.value)
+    fileImg.value.forEach((data: File, index: number) => {
+      formData.append("image" + index, data)
+    });
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}: ${pair[1]}`);
     }

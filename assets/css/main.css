@@ -103,3 +103,14 @@ body {
   border-radius: 5px;
   z-index: 10;    /* 確保文字顯示在圖片上層 */
 }
+
+/* 上傳區域顏色 */
+.bg-default {
+  background-color: white;
+}
+.bg-elevated {
+    background-color: white;
+}
+.text-default {
+  color: black;
+}
