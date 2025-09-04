@@ -32,6 +32,19 @@
           </v-col>
         </v-row>
       </v-form>
+      <v-row class="mt-3">
+        <v-col cols="6" class="text-center">
+          <v-btn color="primary" @click="handleGoogleSignIn">
+            Google登入
+          </v-btn>
+        </v-col>
+        <v-col cols="6" class="text-center">
+          <v-btn color="primary" @click="handleGoogleSignOut">
+            Google登出
+          </v-btn>
+        </v-col>
+      </v-row>
+      <p class="mb-4 text-center">{{ googleUserInfo }}</p>
     </v-container>
   </div>
 </template>
@@ -40,6 +53,11 @@
 import { useSweetAlert } from '~/composables/useSweetAlert'
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+
+const { $firebaseAuth } = useNuxtApp()
+//google登入用戶的資訊
+const googleUserInfo = ref(null)
 
 const form = ref({
   account: '',
@@ -74,4 +92,53 @@ const submitForm = async () => {
     })
   }
 }
+
+//google登入
+const handleGoogleSignIn = async () => {
+  const provider = new GoogleAuthProvider()
+  const { showAlert } = useSweetAlert()
+  try {
+    await signInWithPopup($firebaseAuth, provider)
+    // 登入成功，onAuthStateChanged 會自動更新 user 的值
+    showAlert({
+        title: '登入成功',
+        icon: 'success',
+    })
+  } catch (err) {
+    showAlert({
+        title: '登入失敗',
+        text: err,
+        icon: 'error',
+    })
+  }
+};
+
+//google登出
+const handleGoogleSignOut = async () => {
+  const { showAlert } = useSweetAlert()
+  try {
+    await signOut($firebaseAuth)
+    googleUserInfo.value = null
+    // 登出成功，onAuthStateChanged 會自動更新 user 的值
+    showAlert({
+        title: '登出成功',
+        icon: 'success',
+    })
+  } catch (err) {
+    showAlert({
+        title: '登出失敗',
+        text: err,
+        icon: 'error',
+    })
+  }
+};
+
+// 監聽google登入狀態的變化
+onMounted(() => {
+  if (process.client) {
+    onAuthStateChanged($firebaseAuth, (currentUser) => {
+      googleUserInfo.value = currentUser
+    })
+  }
+})
 </script>
