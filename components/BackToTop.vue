@@ -1,7 +1,6 @@
 <template>
   <v-btn
     v-show="showButton"
-    class="back-to-top"
     color="primary"
     fab
     elevation="8"
@@ -37,12 +36,3 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
-
-<style scoped>
-.back-to-top {
-  position: fixed;
-  bottom: 64px;
-  right: 24px;
-  z-index: 7000;
-}
-</style>
