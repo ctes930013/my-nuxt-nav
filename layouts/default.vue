@@ -12,6 +12,7 @@
         <NuxtPage />
       </v-main>
 
+      <BackToTop />
       <Footer class="main-bottom"></Footer>
     </v-app>
   </div>
@@ -20,6 +21,7 @@
 <script setup>
 import { ref } from 'vue'
 import CommonAppBar from '~/components/CommonAppBar.vue'
+import BackToTop from '~/components/BackToTop.vue'
 
 const appBarHeight = ref(100)    //紀錄app abr高度
 </script>

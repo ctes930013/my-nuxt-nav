@@ -9,7 +9,7 @@
 }
 
 .main-bottom {
-  position: static !important;
+  position: relative !important;
   margin-top: auto;
 }
 

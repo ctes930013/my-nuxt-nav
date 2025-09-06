@@ -11,16 +11,22 @@ export const useUserStore = defineStore('user', {
   },
 
   actions: {
+    // 初始化時從 localStorage 載入資料
+    initialize() {
+      const userId = localStorage.getItem('user_id')
+      if (userId) {
+        this.userId = Number(userId)
+      }
+    },
+
     login(id: number) {
       this.userId = id
+      localStorage.setItem('user_id', id.toString())
     },
 
     logout() {
       this.userId = null
+      localStorage.removeItem('user_id')
     },
-  },
-
-  persist: {
-    storage: process.client ? sessionStorage : undefined, // Safe for SSR
   },
 })
