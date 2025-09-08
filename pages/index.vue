@@ -100,7 +100,7 @@ function addCart(product: Product) {
 }
 .img-container {
   position: relative;
-  padding-bottom: 75%; /* 4:3 比例 */
+  aspect-ratio: 4 / 3;
   overflow: hidden;
 }
 .img-container-fit {
@@ -112,7 +112,7 @@ function addCart(product: Product) {
 }
 @media (min-width: 768px) {
   .img-container {
-    padding-bottom: 25%; /* 4:1 比例 */
+    aspect-ratio: 4 / 1;
   }
 }
 </style>
