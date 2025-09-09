@@ -15,11 +15,11 @@
         <!-- 下層選單列 -->
         <div class="d-flex align-center px-4 py-1 d-flex-full-width">
           <!-- 手機板的漢堡包選單 -->
-          <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-block d-md-none">
+          <v-app-bar-nav-icon @click="drawer = !drawer" width="26px" class="nav-bar-icon d-block d-md-none">
             <i class="bi bi-list"></i>
           </v-app-bar-nav-icon>
 
-          <v-toolbar-title class="shrink">
+          <v-toolbar-title class="shrink ml-2">
             <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
           </v-toolbar-title>
 
