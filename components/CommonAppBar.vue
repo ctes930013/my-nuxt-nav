@@ -14,7 +14,12 @@
 
         <!-- 下層選單列 -->
         <div class="d-flex align-center px-4 py-1 d-flex-full-width">
-          <v-toolbar-title class="shrink">
+          <!-- 手機板的漢堡包選單 -->
+          <v-app-bar-nav-icon @click="drawer = !drawer" width="26px" class="nav-bar-icon d-block d-md-none">
+            <i class="bi bi-list"></i>
+          </v-app-bar-nav-icon>
+
+          <v-toolbar-title class="shrink ml-2">
             <NuxtLink class="navbar-brand" to="/">MyApp</NuxtLink>
           </v-toolbar-title>
 
@@ -64,10 +69,6 @@
 
           <div class="d-flex flex-column align-center">
             <div class="d-flex align-center">
-              <!-- 購物車 -->
-              <v-btn class="d-none d-md-flex" to="/cart">
-                <i class="bi bi-cart"></i>
-              </v-btn>
               <!-- 會員中心 -->
               <!-- 已登入就用懸浮選單 -->
               <ClientOnly>
@@ -75,7 +76,7 @@
                   <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
                     <!-- 激活選單的按鈕 -->
                     <template v-slot:activator="{ props }">
-                      <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
+                      <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.5rem;' : ''">
                         <i class="bi bi-person-circle"></i>
                       </v-btn>
                     </template>
@@ -91,11 +92,16 @@
                 </div>
                 <!-- 未登入就用一般按鈕 -->
                 <div v-else>
-                  <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
+                  <v-btn :style="isMobile ? 'min-width: auto; padding: 0.5rem;' : ''" @click="checkUserPage">
                     <i class="bi bi-person-circle"></i>
                   </v-btn>
                 </div>
               </ClientOnly>
+
+              <!-- 購物車 -->
+              <v-btn :style="isMobile ? 'min-width: auto; padding: 0.5rem;' : ''" to="/cart">
+                <i class="bi bi-cart"></i>
+              </v-btn>
             </div>
             <!-- 下方搜尋欄 -->
             <div class="d-none d-md-flex align-center search-input-bg">
@@ -108,11 +114,6 @@
               <v-icon color="black">mdi-magnify</v-icon>
             </div>
           </div>
-
-          <!-- 手機板的漢堡選單 -->
-          <v-app-bar-nav-icon @click="drawer = !drawer" class="nav-bar-icon d-block d-md-none">
-            <i class="bi bi-list"></i>
-          </v-app-bar-nav-icon>
         </div>
       </div>
     </v-app-bar>
@@ -120,7 +121,7 @@
     <v-navigation-drawer
       v-model="drawer"
       temporary
-      location="right"
+      location="left"
       class="d-block d-md-none"
       style="top: 0; height: 100%; z-index: 2000;"
     >
