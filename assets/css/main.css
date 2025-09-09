@@ -99,3 +99,8 @@ body {
 .text-default {
   color: black;
 }
+
+/* 移除點擊按鈕後的背景顏色 */
+.v-btn--active > .v-btn__overlay, .v-btn[aria-haspopup=menu][aria-expanded=true] > .v-btn__overlay {
+    opacity: 0 !important;
+}
