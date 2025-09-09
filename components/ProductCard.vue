@@ -56,8 +56,8 @@ const props = defineProps({
   object-fit: cover;    /* 確保圖片填滿容器 */
   transition: transform 0.3s ease;     /* 平滑過渡，0.3秒 */
 }
-
-.zoom-image:hover {
+/* 當卡片被 hover 時，放大圖片 */
+.carding:hover .zoom-image {
   transform: scale(1.1);    /* 放大 1.1 倍，可調整放大比例 */
 }
 @media (min-width: 960px) {
