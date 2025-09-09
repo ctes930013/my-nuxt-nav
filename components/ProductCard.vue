@@ -1,7 +1,7 @@
 <template>
   <v-card class="carding" @click="onProductClick(props.product.id)">
-    <img :src="props.product.image" class="card-img-top" alt="商品圖片">
-    <h5 class="fw-bold mb-1">{{ props.product.name }}</h5>
+    <img :src="props.product.image" class="zoom-image" alt="商品圖片">
+    <h5 class="fw-bold mb-1 mt-4">{{ props.product.name }}</h5>
     <p class="subtitle">{{ props.product.description }}</p>
     <v-btn
       color="primary"
@@ -49,6 +49,16 @@ const props = defineProps({
   border-radius: 12px !important; /* 自訂圓角大小 */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important; /* 自訂陰影 */
   padding: 15px 20px;
+}
+.zoom-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* 確保圖片填滿容器 */
+  transition: transform 0.3s ease;     /* 平滑過渡，0.3秒 */
+}
+
+.zoom-image:hover {
+  transform: scale(1.1);    /* 放大 1.1 倍，可調整放大比例 */
 }
 @media (min-width: 960px) {
   .align-left-md {
