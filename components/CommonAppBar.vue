@@ -69,10 +69,6 @@
 
           <div class="d-flex flex-column align-center">
             <div class="d-flex align-center">
-              <!-- 購物車 -->
-              <v-btn class="d-none d-md-flex" to="/cart">
-                <i class="bi bi-cart"></i>
-              </v-btn>
               <!-- 會員中心 -->
               <!-- 已登入就用懸浮選單 -->
               <ClientOnly>
@@ -80,7 +76,7 @@
                   <v-menu v-model="menu" :close-on-content-click="false" open-on-hover open-on-click>
                     <!-- 激活選單的按鈕 -->
                     <template v-slot:activator="{ props }">
-                      <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''">
+                      <v-btn v-bind="props" :style="isMobile ? 'min-width: auto; padding: 0.5rem;' : ''">
                         <i class="bi bi-person-circle"></i>
                       </v-btn>
                     </template>
@@ -96,11 +92,16 @@
                 </div>
                 <!-- 未登入就用一般按鈕 -->
                 <div v-else>
-                  <v-btn :style="isMobile ? 'min-width: auto; padding: 0.25rem;' : ''" @click="checkUserPage">
+                  <v-btn :style="isMobile ? 'min-width: auto; padding: 0.5rem;' : ''" @click="checkUserPage">
                     <i class="bi bi-person-circle"></i>
                   </v-btn>
                 </div>
               </ClientOnly>
+
+              <!-- 購物車 -->
+              <v-btn :style="isMobile ? 'min-width: auto; padding: 0.5rem;' : ''" to="/cart">
+                <i class="bi bi-cart"></i>
+              </v-btn>
             </div>
             <!-- 下方搜尋欄 -->
             <div class="d-none d-md-flex align-center search-input-bg">

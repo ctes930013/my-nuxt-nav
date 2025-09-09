@@ -20,21 +20,6 @@
   margin-bottom: 8rem !important;
 }
 
-.v-container-padding {
-  @media (min-width: 600px) {
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
-  }
-  @media (min-width: 960px) {
-    padding-left: 8rem !important;
-    padding-right: 8rem !important;
-  }
-  @media (min-width: 1264px) {
-    padding-left: 18rem !important;
-    padding-right: 18rem !important;
-  }
-}
-
 .custom-mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -99,4 +84,9 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   z-index: 10;    /* 確保文字顯示在圖片上層 */
+}
+
+/* 移除點擊按鈕後的背景顏色 */
+.v-btn--active > .v-btn__overlay, .v-btn[aria-haspopup=menu][aria-expanded=true] > .v-btn__overlay {
+    opacity: 0 !important;
 }
